@@ -174,4 +174,19 @@ describe "Movies API" do
     expect(json[:data][:attributes]).to have_key(:year)
     expect(json[:data][:attributes][:year]).to eq(movie_params[:year])
   end
+
+  it 'can delete a movie' do
+    austin_powers = Movie.create(
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816
+    )
+
+    expect(Movie.count).to eq(1)
+
+    delete "/api/v1/movies/#{austin_powers.id}"
+
+    expect(response).to be_succesful
+    expect(Movie.count).to eq(0)
+    expect{Movie.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
