@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :movie do
     title { Faker::Movie.title }
-    tmdbid { Faker::Number.within(range: 1..100000) }
+    tmdb_id { Faker::Number.within(range: 1..100000) }
     poster_path { Faker::LoremFlickr.image }
     description { Faker::Movie.quote }
     genres { Faker::Book.genre }
