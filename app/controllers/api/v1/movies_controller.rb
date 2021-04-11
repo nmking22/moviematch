@@ -18,6 +18,10 @@ class Api::V1::MoviesController < ApplicationController
     render json: MovieSerializer.new(movie)
   end
 
+  def destroy
+    Movie.destroy(params[:id])
+  end
+
   private
 
     def movie_params
