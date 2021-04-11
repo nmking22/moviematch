@@ -123,4 +123,55 @@ describe "Movies API" do
     expect(json[:data][:attributes]).to have_key(:year)
     expect(json[:data][:attributes][:year]).to eq(nil)
   end
+
+  it 'can update an existing movie' do
+    austin_powers = Movie.create(
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816
+    )
+
+    movie_params = ({
+      poster_path: '/1PkGnyFwRyapmbuILIOXXxiSh7Y.jpg',
+      description: "As a swingin' fashion photographer by day and a groovy British superagent by night, Austin Powers is the '60s' most shagadelic spy, baby! But can he stop megalomaniac Dr. Evil after the bald villain freezes himself and unthaws in the '90s? With the help of sexy sidekick Vanessa Kensington, he just might.",
+      genres: 'Comedy',
+      vote_average: 6.5,
+      vote_count: 2349,
+      year: '1997'
+    })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    patch "/api/v1/movies/#{austin_powers.id}", headers: headers, params: JSON.generate(movie_params)
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to be_a(String)
+    expect(json[:data][:id]).to eq(austin_powers.id.to_s)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to be_a(String)
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:title)
+    expect(json[:data][:attributes][:title]).to be_a(String)
+    expect(json[:data][:attributes][:title]).to eq(austin_powers.title)
+    expect(json[:data][:attributes]).to have_key(:tmdb_id)
+    expect(json[:data][:attributes][:tmdb_id]).to be_an(Integer)
+    expect(json[:data][:attributes][:tmdb_id]).to eq(austin_powers.tmdb_id)
+    expect(json[:data][:attributes]).to have_key(:poster_path)
+    expect(json[:data][:attributes][:poster_path]).to eq(movie_params[:poster_path])
+    expect(json[:data][:attributes]).to have_key(:description)
+    expect(json[:data][:attributes][:description]).to eq(movie_params[:description])
+    expect(json[:data][:attributes]).to have_key(:genres)
+    expect(json[:data][:attributes][:genres]).to eq(movie_params[:genres])
+    expect(json[:data][:attributes]).to have_key(:vote_average)
+    expect(json[:data][:attributes][:vote_average]).to eq(movie_params[:vote_average])
+    expect(json[:data][:attributes]).to have_key(:vote_count)
+    expect(json[:data][:attributes][:vote_count]).to eq(movie_params[:vote_count])
+    expect(json[:data][:attributes]).to have_key(:year)
+    expect(json[:data][:attributes][:year]).to eq(movie_params[:year])
+  end
 end
