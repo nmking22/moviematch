@@ -12,9 +12,15 @@ class Api::V1::MoviesController < ApplicationController
     render json: MovieSerializer.new(movie)
   end
 
+  def update
+    movie = Movie.find(params[:id])
+    movie.update(movie_params)
+    render json: MovieSerializer.new(movie)
+  end
+
   private
 
     def movie_params
-      params.permit(:title, :tmdb_id)
+      params.permit(:title, :tmdb_id, :poster_path, :description, :genres, :vote_average, :vote_count, :year)
     end
 end
