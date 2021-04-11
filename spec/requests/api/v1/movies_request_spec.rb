@@ -40,13 +40,13 @@ describe "Movies API" do
   end
 
   it 'can retrieve a movie by id' do
-    movie = Movie.create(
+    austin_powers = Movie.create(
       title: 'Austin Powers: International Man of Mystery',
       tmdb_id: 816
     )
     create_list(:movie, 3)
 
-    get "/api/v1/movies/#{movie.id}"
+    get "/api/v1/movies/#{austin_powers.id}"
 
     json = JSON.parse(response.body, symbolize_names:true)
 
@@ -56,14 +56,62 @@ describe "Movies API" do
     expect(json[:data]).to be_a(Hash)
     expect(json[:data]).to have_key(:id)
     expect(json[:data][:id]).to be_a(String)
+    expect(json[:data][:id]).to eq(austin_powers.id.to_s)
     expect(json[:data]).to have_key(:type)
     expect(json[:data][:type]).to be_a(String)
     expect(json[:data]).to have_key(:attributes)
     expect(json[:data][:attributes]).to be_a(Hash)
     expect(json[:data][:attributes]).to have_key(:title)
     expect(json[:data][:attributes][:title]).to be_a(String)
+    expect(json[:data][:attributes][:title]).to eq(austin_powers.title)
     expect(json[:data][:attributes]).to have_key(:tmdb_id)
     expect(json[:data][:attributes][:tmdb_id]).to be_an(Integer)
+    expect(json[:data][:attributes][:tmdb_id]).to eq(austin_powers.tmdb_id)
+    expect(json[:data][:attributes]).to have_key(:poster_path)
+    expect(json[:data][:attributes][:poster_path]).to eq(nil)
+    expect(json[:data][:attributes]).to have_key(:description)
+    expect(json[:data][:attributes][:description]).to eq(nil)
+    expect(json[:data][:attributes]).to have_key(:genres)
+    expect(json[:data][:attributes][:genres]).to eq(nil)
+    expect(json[:data][:attributes]).to have_key(:vote_average)
+    expect(json[:data][:attributes][:vote_average]).to eq(nil)
+    expect(json[:data][:attributes]).to have_key(:vote_count)
+    expect(json[:data][:attributes][:vote_count]).to eq(nil)
+    expect(json[:data][:attributes]).to have_key(:year)
+    expect(json[:data][:attributes][:year]).to eq(nil)
+  end
+
+  it 'can create a movie' do
+    movie_params = ({
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816
+    })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/movies", headers: headers, params: JSON.generate(movie_params)
+    austin_powers = Movie.last
+
+    post "/api/v1/movies/#{austin_powers.id}"
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to be_a(String)
+    expect(json[:data][:id]).to eq(austin_powers.id.to_s)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to be_a(String)
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:title)
+    expect(json[:data][:attributes][:title]).to be_a(String)
+    expect(json[:data][:attributes][:title]).to eq(austin_powers.title)
+    expect(json[:data][:attributes]).to have_key(:tmdb_id)
+    expect(json[:data][:attributes][:tmdb_id]).to be_an(Integer)
+    expect(json[:data][:attributes][:tmdb_id]).to eq(austin_powers.tmdb_id)
     expect(json[:data][:attributes]).to have_key(:poster_path)
     expect(json[:data][:attributes][:poster_path]).to eq(nil)
     expect(json[:data][:attributes]).to have_key(:description)
