@@ -91,8 +91,6 @@ describe "Movies API" do
     post "/api/v1/movies", headers: headers, params: JSON.generate(movie_params)
     austin_powers = Movie.last
 
-    post "/api/v1/movies/#{austin_powers.id}"
-
     json = JSON.parse(response.body, symbolize_names:true)
 
     expect(response).to be_successful
