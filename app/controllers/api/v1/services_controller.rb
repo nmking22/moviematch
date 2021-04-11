@@ -12,6 +12,16 @@ class Api::V1::ServicesController < ApplicationController
     render json: ServiceSerializer.new(service)
   end
 
+  def update
+    service = Service.find(params[:id])
+    service.update(service_params)
+    render json: ServiceSerializer.new(service)
+  end
+
+  def destroy
+    Service.destroy(params[:id])
+  end
+
   private
 
     def service_params

@@ -100,10 +100,59 @@ describe 'services API' do
   end
 
   it 'can update a service' do
+    netflix = Service.create(
+      name: 'Netflix',
+      watchmode_id: 1234,
+      logo: 'netflix.jpeg'
+    )
 
+    service_params = {
+      name: 'Netflix 2',
+      watchmode_id: 12345,
+      logo: 'netflix_2.jpeg'
+    }
+
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    patch "/api/v1/services/#{netflix.id}", headers: headers, params: JSON.generate(service_params)
+
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to be_a(String)
+    expect(json[:data][:id]).to eq(netflix.id.to_s)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to be_a(String)
+    expect(json[:data][:type]).to eq('service')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:name)
+    expect(json[:data][:attributes][:name]).to be_a(String)
+    expect(json[:data][:attributes][:name]).to eq(service_params[:name])
+    expect(json[:data][:attributes]).to have_key(:watchmode_id)
+    expect(json[:data][:attributes][:watchmode_id]).to be_an(Integer)
+    expect(json[:data][:attributes][:watchmode_id]).to eq(service_params[:watchmode_id])
+    expect(json[:data][:attributes]).to have_key(:logo)
+    expect(json[:data][:attributes][:logo]).to be_a(String)
+    expect(json[:data][:attributes][:logo]).to eq(service_params[:logo])
   end
 
   it 'can delete a service' do
+    netflix = Service.create(
+      name: 'Netflix',
+      watchmode_id: 1234,
+      logo: 'netflix.jpeg'
+    )
 
+    expect(Service.count).to eq(1)
+
+    delete "/api/v1/services/#{netflix.id}"
+
+    expect(response).to be_successful
+    expect(Service.count).to eq(0)
+    expect{Service.find(netflix.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
