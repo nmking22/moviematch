@@ -185,8 +185,8 @@ describe "Movies API" do
 
     delete "/api/v1/movies/#{austin_powers.id}"
 
-    expect(response).to be_succesful
+    expect(response).to be_successful
     expect(Movie.count).to eq(0)
-    expect{Movie.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
+    expect{Movie.find(austin_powers.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
