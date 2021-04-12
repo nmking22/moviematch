@@ -15,11 +15,11 @@ netflix = Service.create(
 amazon_prime = Service.create(
   name: 'Amazon Prime Video',
   watchmode_id: 157,
-  logo: 'hulu_logo.jpeg'
+  logo: 'prime_video_logo.jpeg'  
 )
 
 hulu = Service.create(
   name: 'Hulu',
   watchmode_id: 26,
-  logo: 'prime_video_logo.jpeg'
+  logo: 'hulu_logo.jpeg'
 )
