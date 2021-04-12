@@ -22,6 +22,12 @@ class Api::V1::ServicesController < ApplicationController
     Service.destroy(params[:id])
   end
 
+  def update_availability
+    service_refresh = ServiceUpdateFacade.refresh_availability(params[:service])
+    
+    render json: ServiceRefreshSerializer.new(service_refresh)
+  end
+
   private
 
     def service_params

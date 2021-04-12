@@ -73,4 +73,14 @@ RSpec.configure do |config|
       with.library :rails
     end
   end
+
+  # VCR for mocking & managing rate limits
+  VCR.configure do |config|
+    config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+    config.hook_into :webmock
+    config.filter_sensitive_data('<WATCHMODE_API_KEY>') { ENV['WATCHMODE_API_KEY'] }
+    config.filter_sensitive_data('<TMDB_API_KEY>') { ENV['TMDB_API_KEY'] }
+    config.default_cassette_options = { re_record_interval: 7.days }
+    config.configure_rspec_metadata!
+  end
 end

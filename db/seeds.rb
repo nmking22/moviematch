@@ -5,3 +5,21 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+netflix = Service.create(
+  name: 'Netflix',
+  watchmode_id: 203,
+  logo: 'netflix_logo.png'
+)
+
+amazon_prime = Service.create(
+  name: 'Amazon Prime Video',
+  watchmode_id: 157,
+  logo: 'prime_video_logo.jpeg'  
+)
+
+hulu = Service.create(
+  name: 'Hulu',
+  watchmode_id: 26,
+  logo: 'hulu_logo.jpeg'
+)
