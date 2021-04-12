@@ -155,4 +155,41 @@ describe 'services API' do
     expect(Service.count).to eq(0)
     expect{Service.find(netflix.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it 'can update availability', :vcr do
+    hulu = Service.create(
+      name: 'Hulu',
+      watchmode_id: 157,
+      logo: 'hulu_logo.png'
+    )
+    movie_1 = create(:movie)
+    movie_2 = create(:movie)
+    movie_3 = create(:movie)
+    hulu.movie_availabilities.create(movie: movie_1)
+    hulu.movie_availabilities.create(movie: movie_2)
+    hulu.movie_availabilities.create(movie: movie_3)
+
+    params = {
+      service: 'hulu'
+    }
+
+    patch "/api/v1/services/update_availability", params: params
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to eq(nil)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to eq('service_refresh')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:name)
+    expect(json[:data][:attributes][:name]).to eq('Hulu')
+    expect(json[:data][:attributes]).to have_key(:movie_count)
+    expect(json[:data][:attributes][:movie_count]).to be_an(Integer)
+  end
 end
