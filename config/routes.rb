@@ -3,8 +3,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :movies
+      patch '/services/update_availability', to: 'services#update_availability'
       resources :services
+      resources :movies
     end
   end
 end
