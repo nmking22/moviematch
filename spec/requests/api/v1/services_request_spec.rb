@@ -192,4 +192,52 @@ describe 'services API' do
     expect(json[:data][:attributes]).to have_key(:movie_count)
     expect(json[:data][:attributes][:movie_count]).to be_an(Integer)
   end
+
+  it 'can update all availabilities', :vcr do
+    netflix = Service.create(
+      name: 'Netflix',
+      watchmode_id: 203,
+      logo: 'netflix_logo.png'
+    )
+
+    amazon_prime = Service.create(
+      name: 'Amazon Prime Video',
+      watchmode_id: 157,
+      logo: 'prime_video_logo.jpeg'
+    )
+
+    hulu = Service.create(
+      name: 'Hulu',
+      watchmode_id: 26,
+      logo: 'hulu_logo.jpeg'
+    )
+
+    patch "/api/v1/services/update_all_availabilities"
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to eq(nil)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to eq('full_refresh')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:total_movie_count)
+    expect(json[:data][:attributes][:total_movie_count]).to be_an(Integer)
+    expect(json[:data][:attributes]).to have_key(:service_refreshes)
+    expect(json[:data][:attributes][:service_refreshes]).to be_an(Array)
+    json[:data][:attributes][:service_refreshes].each do |service_refresh|
+      expect(service_refresh).to be_a(Hash)
+      expect(service_refresh).to have_key(:id)
+      expect(service_refresh[:id]).to eq(nil)
+      expect(service_refresh).to have_key(:name)
+      expect(service_refresh[:name]).to be_a(String)
+      expect(service_refresh).to have_key(:movie_count)
+      expect(service_refresh[:movie_count]).to be_an(Integer)
+    end
+  end
 end
