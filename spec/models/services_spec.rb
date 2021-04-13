@@ -10,6 +10,7 @@ describe Service, type: :model do
   describe 'relationships' do
     it do
       should have_many :movie_availabilities
+      should have_many(:movies).through(:movie_availabilities)
     end
   end
 end
