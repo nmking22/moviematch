@@ -173,7 +173,7 @@ describe 'services API' do
       service: 'hulu'
     }
 
-    patch "/api/v1/services/update_availability", params: params
+    get "/api/v1/services/update_availability", params: params
 
     json = JSON.parse(response.body, symbolize_names:true)
 
@@ -212,7 +212,7 @@ describe 'services API' do
       logo: 'hulu_logo.jpeg'
     )
 
-    patch "/api/v1/services/update_all_availabilities"
+    get "/api/v1/services/update_all_availabilities"
 
     json = JSON.parse(response.body, symbolize_names:true)
 

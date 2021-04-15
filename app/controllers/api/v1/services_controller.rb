@@ -24,7 +24,6 @@ class Api::V1::ServicesController < ApplicationController
 
   def update_availability
     service_refresh = ServiceUpdateFacade.refresh_availability(params[:service])
-
     render json: ServiceRefreshSerializer.new(service_refresh)
   end
 
