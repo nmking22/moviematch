@@ -24,12 +24,22 @@ class ServiceUpdateFacade
     ServiceRefresh.new(service[:name], movie_pages[0][:total_results])
   end
 
+  def self.refresh_all_availabilities
+    service_refreshes = services.map do |name, id|
+      refresh_availability(name.to_s)
+    end
+    FullRefresh.new(service_refreshes)
+  end
+
   def self.service_watchmode_id(service_name)
-    services = {
+    services[service_name.to_sym]
+  end
+
+  def self.services
+    {
       netflix: 203,
       hulu: 157,
       amazon: 26
     }
-    services[service_name.to_sym]
   end
 end
