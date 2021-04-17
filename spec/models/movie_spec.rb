@@ -16,25 +16,47 @@ describe Movie, type: :model do
   end
 
   describe 'class methods' do
+    it '.needs_details' do
+      expect(Movie.needs_details).to eq([])
+
+      create_list(:movie, 3)
+
+      expect(Movie.needs_details).to eq([])
+
+      austin_powers = Movie.create(
+        title: 'Austin Powers: International Man of Mystery',
+        tmdb_id: 816
+      )
+
+      expect(Movie.needs_details).to eq([austin_powers])
+    end
+
     it '.estimated_update_time' do
       expect(Movie.estimated_update_time(44)).to eq('10 second(s)')
       expect(Movie.estimated_update_time(261)).to eq('1 minute(s), 0 second(s)')
       expect(Movie.estimated_update_time(16000)).to eq('1 hour(s), 1 minute(s), 20 second(s)')
     end
-  end
 
-  it '.needs_details' do
-    expect(Movie.needs_details).to eq([])
+    it '.hour_plus?' do
+      expect(Movie.hour_plus?(400)).to be false
+      expect(Movie.hour_plus?(6000)).to be true
+    end
 
-    create_list(:movie, 3)
+    it '.minute_plus?' do
+      expect(Movie.minute_plus?(44)).to be false
+      expect(Movie.minute_plus?(65)).to be true
+    end
 
-    expect(Movie.needs_details).to eq([])
+    it '.time_in_hours' do
+      expect(Movie.time_in_hours(16000)).to eq('4 hour(s), 26 minute(s), 40 second(s)')
+    end
 
-    austin_powers = Movie.create(
-      title: 'Austin Powers: International Man of Mystery',
-      tmdb_id: 816
-    )
+    it '.time_in_minutes' do
+      expect(Movie.time_in_minutes(261)).to eq('4 minute(s), 21 second(s)')
+    end
 
-    expect(Movie.needs_details).to eq([austin_powers])
+    it '.time_in_seconds' do
+      expect(Movie.time_in_seconds(44)).to eq('44 second(s)')
+    end
   end
 end
