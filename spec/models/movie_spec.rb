@@ -10,6 +10,8 @@ describe Movie, type: :model do
     it do
       should have_many :movie_availabilities
       should have_many(:services).through(:movie_availabilities)
+      should have_many :movie_genres
+      should have_many(:genres).through(:movie_genres)
     end
   end
 end

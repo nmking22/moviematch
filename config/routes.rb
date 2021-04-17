@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get '/services/update_availability', to: 'services#update_availability'
       get '/services/update_all_availabilities', to: 'services#update_all_availabilities'
       resources :services
+      get '/movies/populate_details', to: 'movies#populate_details'
       resources :movies
     end
   end
