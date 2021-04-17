@@ -21,4 +21,8 @@ class Movie < ApplicationRecord
       "#{total_seconds} second(s)"
     end
   end
+
+  def self.needs_details
+    Movie.where(description:nil)
+  end
 end
