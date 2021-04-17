@@ -9,9 +9,9 @@ class Movie < ApplicationRecord
   def self.needs_details
     Movie.where(description:nil)
   end
-  
+
   def self.estimated_update_time(movie_count)
-    total_seconds = (movie_count.to_f / 100 * 23).round(0)
+    total_seconds = convert_movie_count_to_estimated_seconds(movie_count)
     if hour_plus?(total_seconds)
       time_in_hours(total_seconds)
     elsif minute_plus?(total_seconds)
@@ -19,6 +19,10 @@ class Movie < ApplicationRecord
     else
       time_in_seconds(total_seconds)
     end
+  end
+
+  def self.convert_movie_count_to_estimated_seconds(movie_count)
+    (movie_count.to_f / 100 * 23).round(0)
   end
 
   def self.hour_plus?(seconds)
