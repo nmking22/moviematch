@@ -189,4 +189,70 @@ describe "Movies API" do
     expect(Movie.count).to eq(0)
     expect{Movie.find(austin_powers.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it 'can populate details for incomplete movies', :vcr do
+    Movie.create(
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816
+    )
+    Movie.create(
+      title: 'Nightcrawler',
+      tmdb_id: 242582
+    )
+    Movie.create(
+      title: 'The Theory of Everything',
+      tmdb_id: 266856
+    )
+
+    get '/api/v1/movies/populate_details'
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    # tests response is correct
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:movies_updated)
+    expect(json[:movies_updated]).to eq(3)
+    expect(json).to have_key(:update_status)
+    expect(json[:update_status]).to eq("In progress - it may take several minutes for the database to be fully updated.")
+
+    austin_powers = Movie.find_by(tmdb_id:816)
+    nightcrawler = Movie.find_by(tmdb_id:242582)
+    theory_of_everything = Movie.find_by(tmdb_id:266856)
+    movies = [austin_powers, nightcrawler, theory_of_everything]
+
+    # tests movie objects have been updated
+    movies.each do |movie|
+      expect(movie.poster_path).to be_a(String)
+      expect(movie.description).to be_a(String)
+      expect(movie.vote_average).to be_a(Float)
+      expect(movie.vote_count).to be_a(Integer)
+      expect(movie.year).to be_a(String)
+      expect(movie.genres).not_to eq([])
+    end
+  end
+
+  it 'returns descriptive body when movie details are already populated' do
+    Movie.create(
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816,
+      poster_path: '/5uD4dxNX8JKFjWKYMHyOsqhi5pN.jpg',
+      description: "As a swingin' fashion photographer by day and a groovy British superagent by night, Austin Powers is the '60s' most shagadelic spy, baby! But can he stop megalomaniac Dr. Evil after the bald villain freezes himself and unthaws in the '90s? With the help of sexy sidekick Vanessa Kensington, he just might.",
+      vote_average: 6.5,
+      vote_count: 2357,
+      year: '1997'
+    )
+
+    get '/api/v1/movies/populate_details'
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    # tests response is correct
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:movies_updated)
+    expect(json[:movies_updated]).to eq(0)
+    expect(json).to have_key(:update_status)
+    expect(json[:update_status]).to eq('Complete - all movies are populated.')
+  end
 end
