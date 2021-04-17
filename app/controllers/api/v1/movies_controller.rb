@@ -43,6 +43,6 @@ class Api::V1::MoviesController < ApplicationController
   private
 
     def movie_params
-      params.permit(:title, :tmdb_id, :poster_path, :description, :genres, :vote_average, :vote_count, :year)
+      params.permit(:title, :tmdb_id, :poster_path, :description, :vote_average, :vote_count, :year)
     end
 end
