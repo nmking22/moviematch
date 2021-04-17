@@ -205,7 +205,7 @@ describe "Movies API" do
     expect(json).to have_key(:movies_updated)
     expect(json[:movies_updated]).to eq(3)
     expect(json).to have_key(:update_status)
-    expect(json[:update_status]).to eq("In progress - it may take several minutes for the database to be fully updated.")
+    expect(json[:update_status]).to eq('Complete - incomplete movies have been populated.')
 
     austin_powers = Movie.find_by(tmdb_id:816)
     nightcrawler = Movie.find_by(tmdb_id:242582)
