@@ -22,6 +22,24 @@ class Api::V1::MoviesController < ApplicationController
     Movie.destroy(params[:id])
   end
 
+  def populate_details
+    movies = Movie.where(description:nil)
+    unless movies == []
+      TmdbFacade.populate_movie_details(movies)
+      output = {
+        movies_updated: movies.length,
+        update_status: 'In progress - it may take several minutes for the database to be fully updated.'
+      }
+      render json: output
+    else
+      output = {
+        movies_updated: 0,
+        update_status: 'Complete - all movies are populated.'
+      }
+      render json: output
+    end
+  end
+
   private
 
     def movie_params
