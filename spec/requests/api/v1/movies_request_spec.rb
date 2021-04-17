@@ -28,8 +28,6 @@ describe "Movies API" do
       expect(movie_data[:attributes][:poster_path]).to be_a(String)
       expect(movie_data[:attributes]).to have_key(:description)
       expect(movie_data[:attributes][:description]).to be_a(String)
-      expect(movie_data[:attributes]).to have_key(:genres)
-      expect(movie_data[:attributes][:genres]).to be_a(String)
       expect(movie_data[:attributes]).to have_key(:vote_average)
       expect(movie_data[:attributes][:vote_average]).to be_a(Float)
       expect(movie_data[:attributes]).to have_key(:vote_count)
@@ -71,8 +69,6 @@ describe "Movies API" do
     expect(json[:data][:attributes][:poster_path]).to eq(nil)
     expect(json[:data][:attributes]).to have_key(:description)
     expect(json[:data][:attributes][:description]).to eq(nil)
-    expect(json[:data][:attributes]).to have_key(:genres)
-    expect(json[:data][:attributes][:genres]).to eq(nil)
     expect(json[:data][:attributes]).to have_key(:vote_average)
     expect(json[:data][:attributes][:vote_average]).to eq(nil)
     expect(json[:data][:attributes]).to have_key(:vote_count)
@@ -114,8 +110,6 @@ describe "Movies API" do
     expect(json[:data][:attributes][:poster_path]).to eq(nil)
     expect(json[:data][:attributes]).to have_key(:description)
     expect(json[:data][:attributes][:description]).to eq(nil)
-    expect(json[:data][:attributes]).to have_key(:genres)
-    expect(json[:data][:attributes][:genres]).to eq(nil)
     expect(json[:data][:attributes]).to have_key(:vote_average)
     expect(json[:data][:attributes][:vote_average]).to eq(nil)
     expect(json[:data][:attributes]).to have_key(:vote_count)
@@ -133,7 +127,6 @@ describe "Movies API" do
     movie_params = ({
       poster_path: '/1PkGnyFwRyapmbuILIOXXxiSh7Y.jpg',
       description: "As a swingin' fashion photographer by day and a groovy British superagent by night, Austin Powers is the '60s' most shagadelic spy, baby! But can he stop megalomaniac Dr. Evil after the bald villain freezes himself and unthaws in the '90s? With the help of sexy sidekick Vanessa Kensington, he just might.",
-      genres: 'Comedy',
       vote_average: 6.5,
       vote_count: 2349,
       year: '1997'
@@ -165,8 +158,6 @@ describe "Movies API" do
     expect(json[:data][:attributes][:poster_path]).to eq(movie_params[:poster_path])
     expect(json[:data][:attributes]).to have_key(:description)
     expect(json[:data][:attributes][:description]).to eq(movie_params[:description])
-    expect(json[:data][:attributes]).to have_key(:genres)
-    expect(json[:data][:attributes][:genres]).to eq(movie_params[:genres])
     expect(json[:data][:attributes]).to have_key(:vote_average)
     expect(json[:data][:attributes][:vote_average]).to eq(movie_params[:vote_average])
     expect(json[:data][:attributes]).to have_key(:vote_count)
