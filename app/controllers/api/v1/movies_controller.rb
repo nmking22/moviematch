@@ -23,14 +23,14 @@ class Api::V1::MoviesController < ApplicationController
   end
 
   def populate_details
-    movies = Movie.where(description:nil)
+    movies = Movie.needs_details
     if movies == []
       output = {
         movies_updated: 0,
         update_status: 'Complete - all movies are populated.'
       }
       render json: output
-    elsif movies.length < 10
+    elsif movies.length < 30
       TmdbFacade.populate_movie_details(movies)
       output = {
         movies_updated: movies.length,
@@ -38,10 +38,10 @@ class Api::V1::MoviesController < ApplicationController
       }
       render json: output
     else
-      MovieDetailsUpdateJob.perform_later(movies)
+      MovieDetailsUpdateJob.perform_later
       output = {
         movies_updated: movies.length,
-        update_status: 'In progress - it may take several minutes for the database to be fully updated.'
+        update_status: "In progress - details for #{movies.length} movies are currently being updated. Estimated completion time: #{Movie.estimated_update_time(movies.length)}."
       }
       render json: output
     end
