@@ -16,7 +16,7 @@ RSpec.describe MovieDetailsUpdateJob, type: :job do
       tmdb_id: 266856
     )
 
-    MovieDetailsUpdateJob.perform_now(movies)
+    MovieDetailsUpdateJob.perform_now
 
     austin_powers = Movie.find_by(tmdb_id:816)
     nightcrawler = Movie.find_by(tmdb_id:242582)
