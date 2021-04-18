@@ -246,4 +246,24 @@ describe "Movies API" do
     expect(json).to have_key(:update_status)
     expect(json[:update_status]).to eq('Complete - all movies are populated.')
   end
+
+  it 'returns progress report for lengthy populate_details requests', :vcr do
+    30.times do
+      Movie.create(
+        title: 'Austin Powers: International Man of Mystery',
+        tmdb_id: 816
+      )
+    end
+
+    get '/api/v1/movies/populate_details'
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:movies_updated)
+    expect(json[:movies_updated]).to eq(30)
+    expect(json).to have_key(:update_status)
+    expect(json[:update_status]).to eq("In progress - details for 30 movies are currently being updated. Estimated completion time: 7 second(s).")
+  end
 end
