@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :services
       get '/movies/populate_details', to: 'movies#populate_details'
       resources :movies
+      resources :users, only: [:create]
     end
   end
 end
