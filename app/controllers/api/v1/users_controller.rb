@@ -7,6 +7,24 @@ class Api::V1::UsersController < ApplicationController
     render json: UserSerializer.new(user)
   end
 
+  def show
+    user = User.find_by(uid: params[:id])
+    if user
+      render json: UserSerializer.new(user)
+    else
+      output = {
+        error: 'User does not exist in database.'
+      }
+      render json: output, status: :bad_request
+    end
+  end
+
+  def update
+    user = User.find_by(uid: params[:id])
+    user.update(user_params)
+    render json: UserSerializer.new(user)
+  end
+
   private
 
   def user_params
