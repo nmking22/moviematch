@@ -5,6 +5,8 @@ class Movie < ApplicationRecord
   has_many :services, through: :movie_availabilities
   has_many :movie_genres
   has_many :genres, through: :movie_genres
+  has_many :swipes
+  has_many :users, through: :swipes
 
   def self.needs_details
     Movie.where(description:nil)

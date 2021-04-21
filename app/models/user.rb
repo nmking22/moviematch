@@ -4,4 +4,7 @@ class User < ApplicationRecord
                         :last_name,
                         :image,
                         :uid
+
+  has_many :swipes
+  has_many :movies, through: :swipes
 end
