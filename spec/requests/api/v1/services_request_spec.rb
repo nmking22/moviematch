@@ -193,7 +193,7 @@ describe 'services API' do
     expect(json[:data][:attributes][:movie_count]).to be_an(Integer)
   end
 
-  it 'can update all availabilities', :vcr do
+  xit 'can update all availabilities', :vcr do
     netflix = Service.create(
       name: 'Netflix',
       watchmode_id: 203,
