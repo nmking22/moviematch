@@ -8,4 +8,11 @@ describe User, type: :model do
     it { should validate_presence_of :image}
     it { should validate_presence_of :uid}
   end
+
+  describe 'relationships' do
+    it do
+      should have_many :swipes
+      should have_many(:movies).through(:swipes)
+    end
+  end
 end

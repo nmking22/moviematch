@@ -12,6 +12,8 @@ describe Movie, type: :model do
       should have_many(:services).through(:movie_availabilities)
       should have_many :movie_genres
       should have_many(:genres).through(:movie_genres)
+      should have_many :swipes
+      should have_many(:users).through(:swipes)
     end
   end
 
