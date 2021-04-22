@@ -15,6 +15,9 @@ Rails.application.routes.draw do
 
       # users routes
       resources :users, only: [:create, :show, :update]
+
+      # swipes routes
+      resources :swipes, only: [:create]
     end
   end
 end
