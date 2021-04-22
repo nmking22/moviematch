@@ -3,11 +3,17 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      # services routes
       get '/services/update_availability', to: 'services#update_availability'
       get '/services/update_all_availabilities', to: 'services#update_all_availabilities'
       resources :services
+
+      # movies routes
       get '/movies/populate_details', to: 'movies#populate_details'
+      get '/movies/random_available', to: 'movies#random_available'
       resources :movies
+
+      # users routes
       resources :users, only: [:create, :show, :update]
     end
   end

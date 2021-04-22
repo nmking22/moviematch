@@ -47,6 +47,13 @@ class Api::V1::MoviesController < ApplicationController
     end
   end
 
+  def random_available
+    user = User.find_by(id: params[:user_id])
+    movie = Movie.random_unswiped(user)
+    
+    render json: MovieSerializer.new(movie)
+  end
+
   private
 
     def movie_params
