@@ -266,4 +266,25 @@ describe "Movies API" do
     expect(json).to have_key(:update_status)
     expect(json[:update_status]).to eq("In progress - details for 30 movies are currently being updated. Estimated completion time: 7 second(s).")
   end
+
+  it 'can retrieve random available movie info' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nickmaxking@gmail.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    create_list(:movie, 3)
+    params = {
+      user_id: nick.id
+    }
+
+    get '/api/v1/movies/random_available', params: params
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    binding.pry
+    # return movie info where user.swipes
+  end
 end
