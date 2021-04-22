@@ -53,10 +53,6 @@ class Movie < ApplicationRecord
   end
 
   def self.random_unswiped(user_id)
-    # Refactor this!
-
-    # return all movies that user has not swiped on and that are available on any service
-    # return all movies with movie_availabilities without swipes by user
     available_movies = Movie.joins(:movie_availabilities)
     invalid_movies = Movie.joins(:swipes).where(swipes: {user_id:user_id})
     valid_movies = available_movies - invalid_movies
