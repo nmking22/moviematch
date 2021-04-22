@@ -276,6 +276,33 @@ describe "Movies API" do
       image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
     )
     create_list(:movie, 3)
+    austin_powers = Movie.create(
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816,
+      poster_path: '/5uD4dxNX8JKFjWKYMHyOsqhi5pN.jpg',
+      description: "As a swingin' fashion photographer by day and a groovy British superagent by night, Austin Powers is the '60s' most shagadelic spy, baby! But can he stop megalomaniac Dr. Evil after the bald villain freezes himself and unthaws in the '90s? With the help of sexy sidekick Vanessa Kensington, he just might.",
+      vote_average: 6.5,
+      vote_count: 2357,
+      year: '1997'
+    )
+    invalid_movie_1 = create(:movie)
+    invalid_movie_2 = create(:movie)
+    service = create(:service)
+    service.movie_availabilities.create(
+      movie: austin_powers
+    )
+    service.movie_availabilities.create(
+      movie: invalid_movie_1
+    )
+    nick.swipes.create(
+      movie: invalid_movie_1,
+      rating: 0
+    )
+    nick.swipes.create(
+      movie: invalid_movie_2,
+      rating: 0
+    )
+
     params = {
       user_id: nick.id
     }
@@ -284,7 +311,31 @@ describe "Movies API" do
 
     json = JSON.parse(response.body, symbolize_names:true)
 
-    binding.pry
-    # return movie info where user.swipes
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to eq(austin_powers.id.to_s)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to eq('movie')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:title)
+    expect(json[:data][:attributes][:title]).to eq(austin_powers.title)
+    expect(json[:data][:attributes]).to have_key(:tmdb_id)
+    expect(json[:data][:attributes][:tmdb_id]).to eq(austin_powers.tmdb_id)
+    expect(json[:data][:attributes]).to have_key(:poster_path)
+    expect(json[:data][:attributes][:poster_path]).to eq(austin_powers.poster_path)
+    expect(json[:data][:attributes]).to have_key(:description)
+    expect(json[:data][:attributes][:description]).to eq(austin_powers.description)
+    expect(json[:data][:attributes]).to have_key(:genres)
+    expect(json[:data][:attributes][:genres]).to eq([])
+    expect(json[:data][:attributes]).to have_key(:vote_average)
+    expect(json[:data][:attributes][:vote_average]).to eq(austin_powers.vote_average)
+    expect(json[:data][:attributes]).to have_key(:vote_count)
+    expect(json[:data][:attributes][:vote_count]).to eq(austin_powers.vote_count)
+    expect(json[:data][:attributes]).to have_key(:year)
+    expect(json[:data][:attributes][:year]).to eq(austin_powers.year)
   end
 end
