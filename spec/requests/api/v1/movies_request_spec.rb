@@ -302,6 +302,20 @@ describe "Movies API" do
       movie: invalid_movie_2,
       rating: 0
     )
+    genre_1 = Genre.create(
+      name: 'Action',
+      tmdb_id: 1
+    )
+    genre_2 = Genre.create(
+      name: 'Comedy',
+      tmdb_id: 2
+    )
+    austin_powers.movie_genres.create(
+      genre: genre_1
+    )
+    austin_powers.movie_genres.create(
+      genre: genre_2
+    )
 
     params = {
       user_id: nick.id
@@ -330,7 +344,20 @@ describe "Movies API" do
     expect(json[:data][:attributes]).to have_key(:description)
     expect(json[:data][:attributes][:description]).to eq(austin_powers.description)
     expect(json[:data][:attributes]).to have_key(:genres)
-    expect(json[:data][:attributes][:genres]).to eq([])
+    expect(json[:data][:attributes][:genres]).to be_an(Array)
+    json[:data][:attributes][:genres].each do |genre|
+      expect(genre).to be_a(Hash)
+      expect(genre).to have_key(:created_at)
+      expect(genre[:created_at]).to be_a(String)
+      expect(genre).to have_key(:id)
+      expect(genre[:id]).to be_an(Integer)
+      expect(genre).to have_key(:name)
+      expect(genre[:name]).to be_a(String)
+      expect(genre).to have_key(:tmdb_id)
+      expect(genre[:tmdb_id]).to be_an(Integer)
+      expect(genre).to have_key(:updated_at)
+      expect(genre[:updated_at]).to be_a(String)
+    end
     expect(json[:data][:attributes]).to have_key(:vote_average)
     expect(json[:data][:attributes][:vote_average]).to eq(austin_powers.vote_average)
     expect(json[:data][:attributes]).to have_key(:vote_count)
