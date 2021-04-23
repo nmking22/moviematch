@@ -5,6 +5,8 @@ class Movie < ApplicationRecord
   has_many :services, through: :movie_availabilities
   has_many :movie_genres
   has_many :genres, through: :movie_genres
+  has_many :swipes
+  has_many :users, through: :swipes
 
   def self.needs_details
     Movie.where(description:nil)
@@ -48,5 +50,16 @@ class Movie < ApplicationRecord
 
   def self.time_in_seconds(seconds)
     "#{seconds} second(s)"
+  end
+
+  def self.random_unswiped(user_id)
+    available_movies = Movie.joins(:movie_availabilities)
+    invalid_movies = Movie.joins(:swipes).where(swipes: {user_id:user_id})
+    valid_movies = available_movies - invalid_movies
+    unless valid_movies == []
+      valid_movies.sample
+    else
+      nil
+    end
   end
 end

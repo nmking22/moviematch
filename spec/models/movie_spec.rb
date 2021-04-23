@@ -12,6 +12,8 @@ describe Movie, type: :model do
       should have_many(:services).through(:movie_availabilities)
       should have_many :movie_genres
       should have_many(:genres).through(:movie_genres)
+      should have_many :swipes
+      should have_many(:users).through(:swipes)
     end
   end
 
@@ -63,6 +65,35 @@ describe Movie, type: :model do
 
     it '.time_in_seconds' do
       expect(Movie.time_in_seconds(44)).to eq('44 second(s)')
+    end
+
+    it '.random_unswiped' do
+      nick = User.create(
+        uid: '12345678910',
+        email: 'nickmaxking@gmail.com',
+        first_name: 'Nick',
+        last_name: 'King',
+        image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+      )
+      service = create(:service)
+      valid_movies = create_list(:movie, 3)
+      invalid_movie = create(:movie)
+      Movie.all.each do |movie|
+        movie.movie_availabilities.create(
+          service: service
+        )
+      end
+      invalid_movie.swipes.create(
+        user: nick,
+        rating: 1
+      )
+
+      10.times do
+        movie = Movie.random_unswiped(nick.id)
+        expect(movie).not_to eq(invalid_movie)
+        expect(movie).to be_a(Movie)
+        expect(valid_movies).to include(movie)
+      end
     end
   end
 end
