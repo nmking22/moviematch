@@ -50,7 +50,11 @@ class Api::V1::MoviesController < ApplicationController
   def random_available
     movie = Movie.random_unswiped(params[:user_id].to_i)
 
+    # Add if movie
     render json: MovieSerializer.new(movie)
+    # Add else
+    # Sad path code
+    # end
   end
 
   private

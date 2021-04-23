@@ -56,6 +56,10 @@ class Movie < ApplicationRecord
     available_movies = Movie.joins(:movie_availabilities)
     invalid_movies = Movie.joins(:swipes).where(swipes: {user_id:user_id})
     valid_movies = available_movies - invalid_movies
-    valid_movies.sample
+    unless valid_movies == []
+      valid_movies.sample
+    else
+      nil
+    end
   end
 end
