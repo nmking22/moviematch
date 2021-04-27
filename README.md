@@ -160,7 +160,7 @@ PATCH /api/v1/users updates a user entry in the BE database.
     "attributes": {
       "first_name":"John",
       "last_name":"Doe",
-      "email":"nickmaxking@gmail.com",
+      "email":"johndoe@gmail.com",
       "uid":"12345678910",
       "image":"https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg"
     }
