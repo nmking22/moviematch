@@ -25,26 +25,26 @@
 
 ### The Plenty of Flicks BE Repo
 
-> The Plenty of Flicks BE Repo leverages two external APIs to create custom endpoints for the FE Repo. The Watchmode API (https://api.watchmode.com/docs/) '/list-titles' endpoint is used to collect and refresh information about available movies on supported services, while The Movie Database API is used to get detailed information about the available movies including images, descriptions and ratings. The data is stored in the BE PostgreSQL database, and uses a combination of RESTful and non-RESTful endpoints to pass the data to the FE.
+> The Plenty of Flicks BE Repo leverages two external APIs to create custom endpoints for the FE Repo. The Watchmode API (https://api.watchmode.com/docs/) '/list-titles' endpoint is used to collect and refresh information about available movies on supported services, while The Movie Database API (https://developers.themoviedb.org/3/getting-started/introduction) is used to get detailed information about the available movies including images, descriptions and ratings. The data is stored in the BE PostgreSQL database, and uses a combination of RESTful and non-RESTful endpoints to pass the data to the FE.
 > Please [visit the Plenty of Flicks FE Repo here](https://github.com/plenty-of-flicks/plenty_of_flicks_fe).
 
 ## How to Install
 
 For usage on your local machine follow the instructions listed below:
 
-git clone git@github.com:plenty-of-flicks/plenty_of_flicks_be.git
-cd plenty_of_flicks_be
-bundle
-rake db:{create,migrate,seed}
-bundle exec figaro install
-add watchmode and tmdb api keys to the config/application.yml file (Available at https://api.watchmode.com/ and https://developers.themoviedb.org/3/getting-started/introduction respectively)
+1. git clone git@github.com:plenty-of-flicks/plenty_of_flicks_be.git
+1. cd plenty_of_flicks_be
+1. bundle
+1. rake db:{create,migrate,seed}
+1. bundle exec figaro install
+1. add watchmode and tmdb api keys to the config/application.yml file (Available at https://api.watchmode.com/ and https://developers.themoviedb.org/3/getting-started/introduction respectively)
 ```
   # in config/application.yml
     WATCHMODE_API_KEY: <your watchmode api key>
     TMDB_API_KEY: <your tmdb api key>
  ```
-rails s
-visit localhost:3000 in your web browser
+1. rails s
+1. visit localhost:3000 in your web browser
 
 ## Dependencies
 
