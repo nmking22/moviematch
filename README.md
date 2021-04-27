@@ -37,14 +37,14 @@ For usage on your local machine follow the instructions listed below:
 1. bundle
 1. rake db:{create,migrate,seed}
 1. bundle exec figaro install
-1. add watchmode and tmdb api keys to the config/application.yml file (Available at https://api.watchmode.com/ and https://developers.themoviedb.org/3/getting-started/introduction respectively)
+1. Add watchmode and tmdb api keys to the config/application.yml file (Available at https://api.watchmode.com/ and https://developers.themoviedb.org/3/getting-started/introduction respectively)
 ```
   # in config/application.yml
     WATCHMODE_API_KEY: <your watchmode api key>
     TMDB_API_KEY: <your tmdb api key>
  ```
-1. rails s
-1. visit localhost:3000 in your web browser
+7. rails s
+8. Visit localhost:3000 in your web browser
 
 ## Dependencies
 
