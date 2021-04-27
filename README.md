@@ -32,19 +32,19 @@
 
 For usage on your local machine follow the instructions listed below:
 
-1. git clone git@github.com:plenty-of-flicks/plenty_of_flicks_be.git
-1. cd plenty_of_flicks_be
-1. bundle
-1. rake db:{create,migrate,seed}
-1. bundle exec figaro install
-1. Add watchmode and tmdb api keys to the config/application.yml file (Available at https://api.watchmode.com/ and https://developers.themoviedb.org/3/getting-started/introduction respectively)
+> 1. git clone git@github.com:plenty-of-flicks/plenty_of_flicks_be.git
+> 1. cd plenty_of_flicks_be
+> 1. bundle
+> 1. rake db:{create,migrate,seed}
+> 1. bundle exec figaro install
+> 1. Add watchmode and tmdb api keys to the config/application.yml file (Available at https://api.watchmode.com/ and https://developers.themoviedb.org/3/getting-started/introduction respectively)
 ```
   # in config/application.yml
     WATCHMODE_API_KEY: <your watchmode api key>
     TMDB_API_KEY: <your tmdb api key>
  ```
-7. rails s
-8. Visit localhost:3000 in your web browser
+> 7. rails s
+> 8. Visit localhost:3000 in your web browser
 
 ## Dependencies
 
@@ -129,7 +129,7 @@ POST /api/v1/users creates a user entry in the BE database.
     "attributes": {
       "first_name":"John",
       "last_name":"Doe",
-      "email":"nickmaxking@gmail.com",
+      "email":"johndoe@gmail.com",
       "uid":"12345678910",
       "image":"https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg"
     }
