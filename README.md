@@ -13,7 +13,7 @@
   - [Learning Goals](#learning-goals)
   - [Project Diagram](#project-diagram)
   - [Schema](#schema)
-  - [API Contract](#api-contract)
+  - [API Documentation](#api-documentation)
   - [Licenses](#licenses)
   - [Contact](#contact)
   
@@ -75,8 +75,6 @@ For usage on your local machine follow the instructions listed below:
 <img width="1409" alt="Screen Shot 2021-04-26 at 10 40 50 PM" src="https://user-images.githubusercontent.com/68172332/116186271-86d62b80-a6e0-11eb-8122-e00c94c55653.png">
 
 ## API Documentation
-
-The BE API uses primarily RESTful endpoints to send appropriate information to the FE Repo.
 
 ### POST /api/v1/swipes
 
