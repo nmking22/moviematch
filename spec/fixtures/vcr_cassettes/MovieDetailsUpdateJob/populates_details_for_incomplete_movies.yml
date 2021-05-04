@@ -25,7 +25,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 16 Apr 2021 20:43:27 GMT
+      - Tue, 04 May 2021 02:11:18 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -36,29 +36,27 @@ http_interactions:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
       Cache-Control:
-      - public, max-age=21600
+      - public, max-age=28800
       X-Memc:
       - HIT
       X-Memc-Key:
       - d485a21da9c0e054971e82e13703bebab13cca1f
       X-Memc-Age:
-      - '13358'
+      - '4086'
       X-Memc-Expires:
-      - '8242'
+      - '11548'
       Etag:
-      - W/"50d526eaa1cf34d9ce498fac9f6208f7"
+      - W/"4a60c39bb8b0f7d9919c3502229e6ae9"
       Vary:
       - Accept-Encoding
       X-Cache:
-      - Hit from cloudfront
+      - Miss from cloudfront
       Via:
-      - 1.1 264cccdb967e804907074b11d3a83242.cloudfront.net (CloudFront)
+      - 1.1 1b942778c388855baa510622b5f73aeb.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - DEN50-C2
+      - ORD53-C2
       X-Amz-Cf-Id:
-      - GLW-H9nzaqDdy_HUff3ZrXkWfxLl5dcS7KmfQgd8CaJ3xCwKyihHcA==
-      Age:
-      - '14364'
+      - ckDHARCSPqYDb1Vm5l3CK1DNojtyBOTJyxYG88_fHzgNu09qLuSiAw==
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/tsxwVsl9BYxy9y1AtxpM7xpNiC8.jpg","belongs_to_collection":{"id":1006,"name":"Austin
@@ -68,14 +66,14 @@ http_interactions:
         by day and a groovy British superagent by night, Austin Powers is the ''60s''
         most shagadelic spy, baby! But can he stop megalomaniac Dr. Evil after the
         bald villain freezes himself and unthaws in the ''90s? With the help of sexy
-        sidekick Vanessa Kensington, he just might.","popularity":16.862,"poster_path":"/5uD4dxNX8JKFjWKYMHyOsqhi5pN.jpg","production_companies":[{"id":12,"logo_path":"/iaYpEp3LQmb8AfAtmTvpqd4149c.png","name":"New
+        sidekick Vanessa Kensington, he just might.","popularity":21.655,"poster_path":"/5uD4dxNX8JKFjWKYMHyOsqhi5pN.jpg","production_companies":[{"id":12,"logo_path":"/iaYpEp3LQmb8AfAtmTvpqd4149c.png","name":"New
         Line Cinema","origin_country":"US"},{"id":594,"logo_path":null,"name":"Capella
         International","origin_country":""},{"id":595,"logo_path":null,"name":"Eric''s
         Boy","origin_country":""}],"production_countries":[{"iso_3166_1":"DE","name":"Germany"},{"iso_3166_1":"US","name":"United
         States of America"}],"release_date":"1997-05-02","revenue":67683989,"runtime":94,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"If
         he were any cooler, he''d still be frozen, baby!","title":"Austin Powers:
-        International Man of Mystery","video":false,"vote_average":6.5,"vote_count":2357}'
-  recorded_at: Sat, 17 Apr 2021 00:42:51 GMT
+        International Man of Mystery","video":false,"vote_average":6.5,"vote_count":2371}'
+  recorded_at: Tue, 04 May 2021 02:11:18 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/242582?api_key=<TMDB_API_KEY>
@@ -101,7 +99,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 16 Apr 2021 23:55:48 GMT
+      - Tue, 04 May 2021 02:11:18 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -112,39 +110,37 @@ http_interactions:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
       Cache-Control:
-      - public, max-age=21600
+      - public, max-age=28800
       X-Memc:
       - HIT
       X-Memc-Key:
       - bb1ff11e7cc6fbdf29b77181cf5b1337bc3f3941
       X-Memc-Age:
-      - '15501'
+      - '5300'
       X-Memc-Expires:
-      - '6099'
+      - '11288'
       Etag:
-      - W/"ed079ab698c2ce0ccaf164d4f5ed10ff"
+      - W/"778caa664e8881e19fa1ae02986137d6"
       Vary:
       - Accept-Encoding
       X-Cache:
-      - Hit from cloudfront
+      - Miss from cloudfront
       Via:
-      - 1.1 94bd5e4f47540501369a53d4ae35d3b3.cloudfront.net (CloudFront)
+      - 1.1 688e3f09a2447eda2ae46655f5644a35.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - DEN50-C2
+      - ORD53-C2
       X-Amz-Cf-Id:
-      - C_NLJQyPagCmQdUn6T4xbkSQrqkmXSd9zUhzMrlu00RAxyZ4qQiQOg==
-      Age:
-      - '2824'
+      - fNf_UHzg9KbvkELe5G71oPr48UFBVN2Gf2AFoPUrpWzQG8wqmF74Zg==
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/3kEfSOwBYhb11APEG0aUDysvW8F.jpg","belongs_to_collection":null,"budget":8500000,"genres":[{"id":80,"name":"Crime"},{"id":18,"name":"Drama"},{"id":53,"name":"Thriller"}],"homepage":"http://nightcrawlerfilm.com","id":242582,"imdb_id":"tt2872718","original_language":"en","original_title":"Nightcrawler","overview":"When
         Lou Bloom, desperate for work, muscles into the world of L.A. crime journalism,
         he blurs the line between observer and participant to become the star of his
-        own story. Aiding him in his effort is Nina, a TV-news veteran.","popularity":27.494,"poster_path":"/j9HrX8f7GbZQm1BrBiR40uFQZSb.jpg","production_companies":[{"id":24049,"logo_path":"/zOHQ0A3PpNoLLeAxRZwSqNV3nPr.png","name":"Sierra/Affinity","origin_country":"US"},{"id":2266,"logo_path":"/owzVs2mguyyJ3vIn7EbgowpUPnk.png","name":"Bold
+        own story. Aiding him in his effort is Nina, a TV-news veteran.","popularity":30.081,"poster_path":"/j9HrX8f7GbZQm1BrBiR40uFQZSb.jpg","production_companies":[{"id":24049,"logo_path":"/zOHQ0A3PpNoLLeAxRZwSqNV3nPr.png","name":"Sierra/Affinity","origin_country":"US"},{"id":2266,"logo_path":"/owzVs2mguyyJ3vIn7EbgowpUPnk.png","name":"Bold
         Films","origin_country":"US"}],"production_countries":[{"iso_3166_1":"US","name":"United
         States of America"}],"release_date":"2014-10-23","revenue":50300000,"runtime":118,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"The
-        city shines brightest at night","title":"Nightcrawler","video":false,"vote_average":7.7,"vote_count":7971}'
-  recorded_at: Sat, 17 Apr 2021 00:42:52 GMT
+        city shines brightest at night","title":"Nightcrawler","video":false,"vote_average":7.7,"vote_count":8010}'
+  recorded_at: Tue, 04 May 2021 02:11:18 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/266856?api_key=<TMDB_API_KEY>
@@ -170,7 +166,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 16 Apr 2021 23:55:48 GMT
+      - Tue, 04 May 2021 02:11:18 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -181,32 +177,30 @@ http_interactions:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
       Cache-Control:
-      - public, max-age=21600
+      - public, max-age=28800
       X-Memc:
       - HIT
       X-Memc-Key:
       - 4aaacececdac005066b41b9957150a9dcd5f36f3
       X-Memc-Age:
-      - '19299'
+      - '4673'
       X-Memc-Expires:
-      - '2301'
+      - '12897'
       Etag:
-      - W/"351c80bd8bdc11cafb0f4a5d70842242"
+      - W/"b11a77bd3b8f9a98b2e5b808d129f794"
       Vary:
       - Accept-Encoding
       X-Cache:
-      - Hit from cloudfront
+      - Miss from cloudfront
       Via:
-      - 1.1 0f653303bc95b26f01daff2926667902.cloudfront.net (CloudFront)
+      - 1.1 283fccaf32df5756e1af7b409b8561c3.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - DEN50-C2
+      - ORD53-C2
       X-Amz-Cf-Id:
-      - cxkXJZHTMg4b44rJCo02GYL1vZe5aUrgU7gOm_6WiahhHWClbGZKkQ==
-      Age:
-      - '2824'
+      - XxJ4RURCF-kE81txVo8L21wpMLmnNWt7vXGOcS_zYon3y6wkEuVjSQ==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOiIvakU0M0w5bmk0T1doandYY0RsRUtrVm5mc2NXLmpwZyIsImJlbG9uZ3NfdG9fY29sbGVjdGlvbiI6bnVsbCwiYnVkZ2V0IjoxNTAwMDAwMCwiZ2VucmVzIjpbeyJpZCI6MTgsIm5hbWUiOiJEcmFtYSJ9LHsiaWQiOjEwNzQ5LCJuYW1lIjoiUm9tYW5jZSJ9XSwiaG9tZXBhZ2UiOiJodHRwOi8vd3d3LmZvY3VzZmVhdHVyZXMuY29tL3RoZV90aGVvcnlfb2ZfZXZlcnl0aGluZyIsImlkIjoyNjY4NTYsImltZGJfaWQiOiJ0dDI5ODA1MTYiLCJvcmlnaW5hbF9sYW5ndWFnZSI6ImVuIiwib3JpZ2luYWxfdGl0bGUiOiJUaGUgVGhlb3J5IG9mIEV2ZXJ5dGhpbmciLCJvdmVydmlldyI6IlRoZSBUaGVvcnkgb2YgRXZlcnl0aGluZyBpcyB0aGUgZXh0cmFvcmRpbmFyeSBzdG9yeSBvZiBvbmUgb2YgdGhlIHdvcmxk4oCZcyBncmVhdGVzdCBsaXZpbmcgbWluZHMsIHRoZSByZW5vd25lZCBhc3Ryb3BoeXNpY2lzdCBTdGVwaGVuIEhhd2tpbmcsIHdobyBmYWxscyBkZWVwbHkgaW4gbG92ZSB3aXRoIGZlbGxvdyBDYW1icmlkZ2Ugc3R1ZGVudCBKYW5lIFdpbGRlLiIsInBvcHVsYXJpdHkiOjIyLjY3NywicG9zdGVyX3BhdGgiOiIva0p1TDM3TlRFNTF6VlAzZUc1YUdNeUtBSWxoLmpwZyIsInByb2R1Y3Rpb25fY29tcGFuaWVzIjpbeyJpZCI6MTAxNjMsImxvZ29fcGF0aCI6Ii8xNktXQk1tZlBYMGFKekRFeERyUHhTTGowUGcucG5nIiwibmFtZSI6IldvcmtpbmcgVGl0bGUgRmlsbXMiLCJvcmlnaW5fY291bnRyeSI6IkdCIn1dLCJwcm9kdWN0aW9uX2NvdW50cmllcyI6W3siaXNvXzMxNjZfMSI6IkdCIiwibmFtZSI6IlVuaXRlZCBLaW5nZG9tIn1dLCJyZWxlYXNlX2RhdGUiOiIyMDE0LTExLTI2IiwicmV2ZW51ZSI6MTIzNzI2Njg4LCJydW50aW1lIjoxMjMsInNwb2tlbl9sYW5ndWFnZXMiOlt7ImVuZ2xpc2hfbmFtZSI6IkxhdGluIiwiaXNvXzYzOV8xIjoibGEiLCJuYW1lIjoiTGF0aW4ifSx7ImVuZ2xpc2hfbmFtZSI6IkVuZ2xpc2giLCJpc29fNjM5XzEiOiJlbiIsIm5hbWUiOiJFbmdsaXNoIn0seyJlbmdsaXNoX25hbWUiOiJGcmVuY2giLCJpc29fNjM5XzEiOiJmciIsIm5hbWUiOiJGcmFuw6dhaXMifSx7ImVuZ2xpc2hfbmFtZSI6Ikl0YWxpYW4iLCJpc29fNjM5XzEiOiJpdCIsIm5hbWUiOiJJdGFsaWFubyJ9XSwic3RhdHVzIjoiUmVsZWFzZWQiLCJ0YWdsaW5lIjoiSGlzIE1pbmQgQ2hhbmdlZCBPdXIgV29ybGQuIEhlciBMb3ZlIENoYW5nZWQgSGlzLiIsInRpdGxlIjoiVGhlIFRoZW9yeSBvZiBFdmVyeXRoaW5nIiwidmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjcuOSwidm90ZV9jb3VudCI6ODUzOX0=
-  recorded_at: Sat, 17 Apr 2021 00:42:52 GMT
+        eyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOiIvakU0M0w5bmk0T1doandYY0RsRUtrVm5mc2NXLmpwZyIsImJlbG9uZ3NfdG9fY29sbGVjdGlvbiI6bnVsbCwiYnVkZ2V0IjoxNTAwMDAwMCwiZ2VucmVzIjpbeyJpZCI6MTgsIm5hbWUiOiJEcmFtYSJ9LHsiaWQiOjEwNzQ5LCJuYW1lIjoiUm9tYW5jZSJ9XSwiaG9tZXBhZ2UiOiJodHRwOi8vd3d3LmZvY3VzZmVhdHVyZXMuY29tL3RoZV90aGVvcnlfb2ZfZXZlcnl0aGluZyIsImlkIjoyNjY4NTYsImltZGJfaWQiOiJ0dDI5ODA1MTYiLCJvcmlnaW5hbF9sYW5ndWFnZSI6ImVuIiwib3JpZ2luYWxfdGl0bGUiOiJUaGUgVGhlb3J5IG9mIEV2ZXJ5dGhpbmciLCJvdmVydmlldyI6IlRoZSBUaGVvcnkgb2YgRXZlcnl0aGluZyBpcyB0aGUgZXh0cmFvcmRpbmFyeSBzdG9yeSBvZiBvbmUgb2YgdGhlIHdvcmxk4oCZcyBncmVhdGVzdCBsaXZpbmcgbWluZHMsIHRoZSByZW5vd25lZCBhc3Ryb3BoeXNpY2lzdCBTdGVwaGVuIEhhd2tpbmcsIHdobyBmYWxscyBkZWVwbHkgaW4gbG92ZSB3aXRoIGZlbGxvdyBDYW1icmlkZ2Ugc3R1ZGVudCBKYW5lIFdpbGRlLiIsInBvcHVsYXJpdHkiOjI4LjU2NSwicG9zdGVyX3BhdGgiOiIva0p1TDM3TlRFNTF6VlAzZUc1YUdNeUtBSWxoLmpwZyIsInByb2R1Y3Rpb25fY29tcGFuaWVzIjpbeyJpZCI6MTAxNjMsImxvZ29fcGF0aCI6Ii8xNktXQk1tZlBYMGFKekRFeERyUHhTTGowUGcucG5nIiwibmFtZSI6IldvcmtpbmcgVGl0bGUgRmlsbXMiLCJvcmlnaW5fY291bnRyeSI6IkdCIn1dLCJwcm9kdWN0aW9uX2NvdW50cmllcyI6W3siaXNvXzMxNjZfMSI6IkdCIiwibmFtZSI6IlVuaXRlZCBLaW5nZG9tIn1dLCJyZWxlYXNlX2RhdGUiOiIyMDE0LTExLTI2IiwicmV2ZW51ZSI6MTIzNzI2Njg4LCJydW50aW1lIjoxMjMsInNwb2tlbl9sYW5ndWFnZXMiOlt7ImVuZ2xpc2hfbmFtZSI6IkxhdGluIiwiaXNvXzYzOV8xIjoibGEiLCJuYW1lIjoiTGF0aW4ifSx7ImVuZ2xpc2hfbmFtZSI6IkVuZ2xpc2giLCJpc29fNjM5XzEiOiJlbiIsIm5hbWUiOiJFbmdsaXNoIn0seyJlbmdsaXNoX25hbWUiOiJGcmVuY2giLCJpc29fNjM5XzEiOiJmciIsIm5hbWUiOiJGcmFuw6dhaXMifSx7ImVuZ2xpc2hfbmFtZSI6Ikl0YWxpYW4iLCJpc29fNjM5XzEiOiJpdCIsIm5hbWUiOiJJdGFsaWFubyJ9XSwic3RhdHVzIjoiUmVsZWFzZWQiLCJ0YWdsaW5lIjoiSGlzIE1pbmQgQ2hhbmdlZCBPdXIgV29ybGQuIEhlciBMb3ZlIENoYW5nZWQgSGlzLiIsInRpdGxlIjoiVGhlIFRoZW9yeSBvZiBFdmVyeXRoaW5nIiwidmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjcuOSwidm90ZV9jb3VudCI6ODU4MX0=
+  recorded_at: Tue, 04 May 2021 02:11:19 GMT
 recorded_with: VCR 6.0.0
