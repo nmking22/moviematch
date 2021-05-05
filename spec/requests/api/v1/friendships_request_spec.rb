@@ -76,4 +76,39 @@ describe 'Friendship API' do
     expect(json).to have_key(:error)
     expect(json[:error]).to eq('Invalid email. Friend not added.')
   end
+
+  it 'friend create when friendship already exists returns descriptive error message' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nick@example.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    ron = User.create(
+      uid: '12345678910',
+      email: 'ron@example.com',
+      first_name: 'Ron',
+      last_name: 'Swanson',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    Friendship.create(
+      user: nick,
+      friend: ron
+    )
+
+    friendship_params = ({
+      friend_email: ron.email
+    })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/users/#{nick.id}/friendships", headers: headers, params: JSON.generate(friendship_params)
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).not_to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:error)
+    expect(json[:error]).to eq('You are already friends with Ron Swanson.')
+  end
 end
