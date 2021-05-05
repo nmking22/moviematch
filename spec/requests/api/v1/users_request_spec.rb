@@ -185,4 +185,112 @@ describe 'users API' do
     expect(json[:data][:attributes]).to have_key(:uid)
     expect(json[:data][:attributes][:uid]).to eq(nick.uid)
   end
+
+  it 'can show all friends of a user' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nick@example.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    ron = User.create(
+      uid: '12345678910',
+      email: 'ron@example.com',
+      first_name: 'Ron',
+      last_name: 'Swanson',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    tom = User.create(
+      uid: '12345678910',
+      email: 'tom@example.com',
+      first_name: 'Tom',
+      last_name: 'Haverford',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    leslie = User.create(
+      uid: '12345678910',
+      email: 'leslie@example.com',
+      first_name: 'Leslie',
+      last_name: 'Knope',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+
+    nick.friendships.create(friend: ron)
+    nick.friendships.create(friend: tom)
+    nick.friendships.create(friend: leslie)
+
+    get "/api/v1/users/#{nick.id}/friends"
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to eq(nick.id.to_s)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to eq('friendlist')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:id)
+    expect(json[:data][:attributes][:id]).to eq(nick.id)
+    expect(json[:data][:attributes]).to have_key(:friends)
+    expect(json[:data][:attributes][:friends]).to be_an(Array)
+
+    expect(json[:data][:attributes][:friends][0]).to be_a(Hash)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:id)
+    expect(json[:data][:attributes][:friends][0][:id]).to eq(ron.id)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:email)
+    expect(json[:data][:attributes][:friends][0][:email]).to eq(ron.email)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:first_name)
+    expect(json[:data][:attributes][:friends][0][:first_name]).to eq(ron.first_name)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:last_name)
+    expect(json[:data][:attributes][:friends][0][:last_name]).to eq(ron.last_name)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:image)
+    expect(json[:data][:attributes][:friends][0][:image]).to eq(ron.image)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:uid)
+    expect(json[:data][:attributes][:friends][0][:uid]).to eq(ron.uid)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:created_at)
+    expect(json[:data][:attributes][:friends][0][:created_at]).to be_a(String)
+    expect(json[:data][:attributes][:friends][0]).to have_key(:updated_at)
+    expect(json[:data][:attributes][:friends][0][:updated_at]).to be_a(String)
+
+    expect(json[:data][:attributes][:friends][1]).to be_a(Hash)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:id)
+    expect(json[:data][:attributes][:friends][1][:id]).to eq(tom.id)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:email)
+    expect(json[:data][:attributes][:friends][1][:email]).to eq(tom.email)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:first_name)
+    expect(json[:data][:attributes][:friends][1][:first_name]).to eq(tom.first_name)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:last_name)
+    expect(json[:data][:attributes][:friends][1][:last_name]).to eq(tom.last_name)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:image)
+    expect(json[:data][:attributes][:friends][1][:image]).to eq(tom.image)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:uid)
+    expect(json[:data][:attributes][:friends][1][:uid]).to eq(tom.uid)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:created_at)
+    expect(json[:data][:attributes][:friends][1][:created_at]).to be_a(String)
+    expect(json[:data][:attributes][:friends][1]).to have_key(:updated_at)
+    expect(json[:data][:attributes][:friends][1][:updated_at]).to be_a(String)
+
+    expect(json[:data][:attributes][:friends][2]).to be_a(Hash)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:id)
+    expect(json[:data][:attributes][:friends][2][:id]).to eq(leslie.id)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:email)
+    expect(json[:data][:attributes][:friends][2][:email]).to eq(leslie.email)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:first_name)
+    expect(json[:data][:attributes][:friends][2][:first_name]).to eq(leslie.first_name)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:last_name)
+    expect(json[:data][:attributes][:friends][2][:last_name]).to eq(leslie.last_name)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:image)
+    expect(json[:data][:attributes][:friends][2][:image]).to eq(leslie.image)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:uid)
+    expect(json[:data][:attributes][:friends][2][:uid]).to eq(leslie.uid)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:created_at)
+    expect(json[:data][:attributes][:friends][2][:created_at]).to be_a(String)
+    expect(json[:data][:attributes][:friends][2]).to have_key(:updated_at)
+    expect(json[:data][:attributes][:friends][2][:updated_at]).to be_a(String)
+  end
 end
