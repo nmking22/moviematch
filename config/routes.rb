@@ -14,10 +14,16 @@ Rails.application.routes.draw do
       resources :movies
 
       # users routes
-      resources :users, only: [:create, :show, :update]
+      get '/users/:id/friends', to: 'users#friends'
+      resources :users, only: [:create, :show, :update] do
+        resources :friendships, only: [:create]
+      end
 
       # swipes routes
       resources :swipes, only: [:create]
+
+      # friendship routes
+      # resources :friendships, only: [:create]
     end
   end
 end
