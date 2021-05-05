@@ -293,4 +293,34 @@ describe 'users API' do
     expect(json[:data][:attributes][:friends][2]).to have_key(:updated_at)
     expect(json[:data][:attributes][:friends][2][:updated_at]).to be_a(String)
   end
+
+  it 'returns an empty friends array if user has no friends' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nick@example.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+
+    get "/api/v1/users/#{nick.id}/friends"
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to eq(nick.id.to_s)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to eq('friendlist')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:id)
+    expect(json[:data][:attributes][:id]).to eq(nick.id)
+    expect(json[:data][:attributes]).to have_key(:friends)
+    expect(json[:data][:attributes][:friends]).to be_an(Array)
+    expect(json[:data][:attributes][:friends]).to eq([])
+  end
 end
