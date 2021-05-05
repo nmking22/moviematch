@@ -29,6 +29,9 @@ describe 'Friendship API' do
     json = JSON.parse(response.body, symbolize_names:true)
 
     expect(response).to be_successful
+    expect(friendship).to be_a(Friendship)
+    expect(friendship.user).to eq(nick)
+    expect(friendship.friend).to eq(ron)
     expect(json).to be_a(Hash)
     expect(json).to have_key(:data)
     expect(json[:data]).to be_a(Hash)
