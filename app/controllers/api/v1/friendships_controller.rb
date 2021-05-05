@@ -6,7 +6,7 @@ class Api::V1::FriendshipsController < ApplicationController
         user_id: friendship_params[:user_id],
         friend: friend
       )
-      render json: FriendshipSerializer.new(friendship)
+      render json: UserSerializer.new(friend)
     else
       output = {
         error: 'Invalid email. Friend not added.'
