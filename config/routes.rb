@@ -21,9 +21,6 @@ Rails.application.routes.draw do
 
       # swipes routes
       resources :swipes, only: [:create]
-
-      # friendship routes
-      # resources :friendships, only: [:create]
     end
   end
 end
