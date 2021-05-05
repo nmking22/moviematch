@@ -18,7 +18,7 @@ describe 'Friendship API' do
     )
 
     friendship_params = ({
-      friend_id: ron.id
+      friend_email: ron.email
     })
     headers = {"CONTENT_TYPE" => "application/json"}
 
@@ -47,5 +47,29 @@ describe 'Friendship API' do
     expect(json[:data][:attributes][:user_id]).to eq(nick.id)
     expect(json[:data][:attributes]).to have_key(:friend_id)
     expect(json[:data][:attributes][:friend_id]).to eq(ron.id)
+  end
+
+  it 'friend create with invalid email returns a descriptive error message' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nick@example.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+
+    friendship_params = ({
+      friend_email: 'april@example.com'
+    })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/users/#{nick.id}/friendships", headers: headers, params: JSON.generate(friendship_params)
+
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).not_to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:error)
+    expect(json[:error]).to eq('Invalid email. Friend not added.')
   end
 end
