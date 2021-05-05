@@ -24,7 +24,6 @@ describe 'Friendship API' do
 
     post "/api/v1/users/#{nick.id}/friendships", headers: headers, params: JSON.generate(friendship_params)
 
-
     friendship = Friendship.last
 
     json = JSON.parse(response.body, symbolize_names:true)
