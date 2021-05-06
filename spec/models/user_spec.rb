@@ -15,6 +15,8 @@ describe User, type: :model do
       should have_many(:movies).through(:swipes)
       should have_many :friendships
       should have_many(:friends).through(:friendships)
+      should have_many :user_groups
+      should have_many(:groups).through(:user_groups)
     end
   end
 end
