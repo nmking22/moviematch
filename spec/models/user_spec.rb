@@ -13,6 +13,8 @@ describe User, type: :model do
     it do
       should have_many :swipes
       should have_many(:movies).through(:swipes)
+      should have_many :friendships
+      should have_many(:friends).through(:friendships)
     end
   end
 end

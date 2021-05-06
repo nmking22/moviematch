@@ -25,6 +25,12 @@ class Api::V1::UsersController < ApplicationController
     render json: UserSerializer.new(user)
   end
 
+  def friends
+    user = User.find_by(id: params[:id])
+    friendlist = Friendlist.new(user)
+    render json: FriendlistSerializer.new(friendlist)
+  end
+
   private
 
   def user_params

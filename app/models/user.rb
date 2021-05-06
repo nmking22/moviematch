@@ -7,4 +7,6 @@ class User < ApplicationRecord
 
   has_many :swipes
   has_many :movies, through: :swipes
+  has_many :friendships
+  has_many :friends, through: :friendships
 end
