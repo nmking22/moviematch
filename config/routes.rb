@@ -23,6 +23,9 @@ Rails.application.routes.draw do
       # groups routes
       resources :groups, only: [:create, :destroy, :show]
 
+      # user_groups routes
+      resources :user_groups, only: [:create]
+
       # swipes routes
       resources :swipes, only: [:create]
     end
