@@ -5,6 +5,10 @@ class Api::V1::UserGroupsController < ApplicationController
     render json: UserGroupSerializer.new(user_group)
   end
 
+  def destroy
+    UserGroup.destroy(params[:id])
+  end
+
   private
 
   def user_group_params

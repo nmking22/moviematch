@@ -44,4 +44,28 @@ describe 'user groups API' do
     expect(json[:data][:attributes]).to have_key(:group_id)
     expect(json[:data][:attributes][:group_id]).to eq(scrantonicity.id)
   end
+
+  it 'can delete a user group' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nickmaxking@gmail.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    scrantonicity = Group.create(
+      name: 'Scrantonicity'
+    )
+    user_group = UserGroup.create(
+      user: nick,
+      group: scrantonicity
+    )
+    expect(UserGroup.count).to eq(1)
+
+    delete "/api/v1/user_groups/#{user_group.id}"
+
+    expect(response).to be_successful
+    expect(UserGroup.count).to eq(0)
+    expect{UserGroup.find(user_group.id)}.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
