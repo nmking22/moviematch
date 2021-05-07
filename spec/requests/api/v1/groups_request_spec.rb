@@ -148,4 +148,87 @@ describe 'Groups API' do
     expect(json[1][:data][:attributes][:users][0]).to have_key(:updated_at)
     expect(json[1][:data][:attributes][:users][0][:updated_at]).to be_a(String)
   end
+
+  it 'can show a group by id' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nickmaxking@gmail.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    ron = User.create(
+      uid: '12345678910',
+      email: 'ron@example.com',
+      first_name: 'Ron',
+      last_name: 'Swanson',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    x_men = Group.create(
+      name: 'X Men'
+    )
+    UserGroup.create(
+      user: nick,
+      group: x_men
+    )
+    UserGroup.create(
+      user: ron,
+      group: x_men
+    )
+
+    get "/api/v1/groups/#{x_men.id}"
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_a(Hash)
+    expect(json[:data]).to have_key(:id)
+    expect(json[:data][:id]).to eq(x_men.id.to_s)
+    expect(json[:data]).to have_key(:type)
+    expect(json[:data][:type]).to eq('group')
+    expect(json[:data]).to have_key(:attributes)
+    expect(json[:data][:attributes]).to be_a(Hash)
+    expect(json[:data][:attributes]).to have_key(:id)
+    expect(json[:data][:attributes][:id]).to eq(x_men.id)
+    expect(json[:data][:attributes]).to have_key(:name)
+    expect(json[:data][:attributes][:name]).to eq(x_men.name)
+    expect(json[:data][:attributes]).to have_key(:users)
+    expect(json[:data][:attributes][:users]).to be_an(Array)
+    expect(json[:data][:attributes][:users].length).to eq(2)
+    expect(json[:data][:attributes][:users][0]).to be_an(Hash)
+    expect(json[:data][:attributes][:users][0]).to have_key(:id)
+    expect(json[:data][:attributes][:users][0][:id]).to eq(nick.id)
+    expect(json[:data][:attributes][:users][0]).to have_key(:email)
+    expect(json[:data][:attributes][:users][0][:email]).to eq(nick.email)
+    expect(json[:data][:attributes][:users][0]).to have_key(:first_name)
+    expect(json[:data][:attributes][:users][0][:first_name]).to eq(nick.first_name)
+    expect(json[:data][:attributes][:users][0]).to have_key(:last_name)
+    expect(json[:data][:attributes][:users][0][:last_name]).to eq(nick.last_name)
+    expect(json[:data][:attributes][:users][0]).to have_key(:image)
+    expect(json[:data][:attributes][:users][0][:image]).to eq(nick.image)
+    expect(json[:data][:attributes][:users][0]).to have_key(:uid)
+    expect(json[:data][:attributes][:users][0][:uid]).to eq(nick.uid)
+    expect(json[:data][:attributes][:users][0]).to have_key(:created_at)
+    expect(json[:data][:attributes][:users][0][:created_at]).to be_a(String)
+    expect(json[:data][:attributes][:users][0]).to have_key(:updated_at)
+    expect(json[:data][:attributes][:users][0][:updated_at]).to be_a(String)
+    expect(json[:data][:attributes][:users][1]).to be_an(Hash)
+    expect(json[:data][:attributes][:users][1]).to have_key(:id)
+    expect(json[:data][:attributes][:users][1][:id]).to eq(ron.id)
+    expect(json[:data][:attributes][:users][1]).to have_key(:email)
+    expect(json[:data][:attributes][:users][1][:email]).to eq(ron.email)
+    expect(json[:data][:attributes][:users][1]).to have_key(:first_name)
+    expect(json[:data][:attributes][:users][1][:first_name]).to eq(ron.first_name)
+    expect(json[:data][:attributes][:users][1]).to have_key(:last_name)
+    expect(json[:data][:attributes][:users][1][:last_name]).to eq(ron.last_name)
+    expect(json[:data][:attributes][:users][1]).to have_key(:image)
+    expect(json[:data][:attributes][:users][1][:image]).to eq(ron.image)
+    expect(json[:data][:attributes][:users][1]).to have_key(:uid)
+    expect(json[:data][:attributes][:users][1][:uid]).to eq(ron.uid)
+    expect(json[:data][:attributes][:users][1]).to have_key(:created_at)
+    expect(json[:data][:attributes][:users][1][:created_at]).to be_a(String)
+    expect(json[:data][:attributes][:users][1]).to have_key(:updated_at)
+    expect(json[:data][:attributes][:users][1][:updated_at]).to be_a(String)
+  end
 end

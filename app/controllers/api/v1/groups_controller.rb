@@ -7,6 +7,11 @@ class Api::V1::GroupsController < ApplicationController
     render json: groups
   end
 
+  def show
+    group = Group.find(params[:id])
+    render json: GroupSerializer.new(group)
+  end
+
   def create
     group = Group.create(group_params)
     render json: GroupSerializer.new(group)
