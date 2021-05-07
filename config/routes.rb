@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       end
 
       # groups routes
-      resources :groups, only: [:create]
+      resources :groups, only: [:create, :destroy]
 
       # swipes routes
       resources :swipes, only: [:create]

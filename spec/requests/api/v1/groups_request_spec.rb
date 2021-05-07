@@ -29,4 +29,18 @@ describe 'Groups API' do
     expect(json[:data][:attributes]).to have_key(:id)
     expect(json[:data][:attributes][:id]).to eq(group.id)
   end
+
+  it 'can delete a group' do
+    group = Group.create(
+      name: 'Motley J'
+    )
+
+    expect(Group.count).to eq(1)
+
+    delete "/api/v1/groups/#{group.id}"
+
+    expect(response).to be_successful
+    expect(Group.count).to eq(0)
+    expect{Group.find(group.id)}.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
