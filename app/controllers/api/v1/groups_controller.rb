@@ -1,4 +1,12 @@
 class Api::V1::GroupsController < ApplicationController
+  def index
+    user = User.find(params[:user_id])
+    groups = user.groups.map do |group|
+      GroupSerializer.new(group)
+    end
+    render json: groups
+  end
+
   def create
     group = Group.create(group_params)
     render json: GroupSerializer.new(group)

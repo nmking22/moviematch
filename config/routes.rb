@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get '/users/:id/friends', to: 'users#friends'
       resources :users, only: [:create, :show, :update] do
         resources :friendships, only: [:create]
+        resources :groups, only: [:index]
       end
 
       # groups routes
