@@ -235,16 +235,6 @@ describe Movie, type: :model do
         user: ron,
         rating: 1
       )
-      Swipe.create(
-        movie: theory_of_everything,
-        user: nick,
-        rating: 0
-      )
-      Swipe.create(
-        movie: theory_of_everything,
-        user: tom,
-        rating: 0
-      )
 
       expect(Movie.group_matches(fantastic_four.id)).to eq([austin_powers])
       expect(Movie.group_matches(x_men.id)).to eq([austin_powers, nightcrawler])
