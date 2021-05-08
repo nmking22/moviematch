@@ -63,7 +63,7 @@ class Movie < ApplicationRecord
     end
   end
 
-  def self.group_right_swiped(group_id)
+  def self.group_matches(group_id)
     # REFACTOR - change to activerecord
     group = Group.find(group_id)
     right_swiped = Set.new

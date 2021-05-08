@@ -246,9 +246,9 @@ describe Movie, type: :model do
         rating: 0
       )
 
-      expect(Movie.group_right_swiped(fantastic_four.id)).to eq([austin_powers])
-      expect(Movie.group_right_swiped(x_men.id)).to eq([austin_powers, nightcrawler])
-      expect(Movie.group_right_swiped(avengers.id)).to eq([austin_powers, theory_of_everything])
+      expect(Movie.group_matches(fantastic_four.id)).to eq([austin_powers])
+      expect(Movie.group_matches(x_men.id)).to eq([austin_powers, nightcrawler])
+      expect(Movie.group_matches(avengers.id)).to eq([austin_powers, theory_of_everything])
     end
   end
 end
