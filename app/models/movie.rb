@@ -62,4 +62,21 @@ class Movie < ApplicationRecord
       nil
     end
   end
+
+  def self.group_right_swiped(group_id)
+    # REFACTOR - change to activerecord
+    group = Group.find(group_id)
+    right_swiped = Set.new
+    left_swiped = Set.new
+    group.users.each do |user|
+      user.swipes.each do |swipe|
+        if swipe.rating == 1
+          right_swiped << swipe.movie
+        elsif swipe.rating == 0
+          left_swiped << swipe.movie
+        end
+      end
+    end
+    (right_swiped - left_swiped).to_a
+  end
 end
