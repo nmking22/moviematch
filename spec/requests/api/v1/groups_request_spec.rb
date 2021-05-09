@@ -273,7 +273,12 @@ describe 'Groups API' do
     )
     nightcrawler = Movie.create(
       title: 'Nightcrawler',
-      tmdb_id: 242582
+      tmdb_id: 242582,
+      poster_path: '/j9HrX8f7GbZQm1BrBiR40uFQZSb.jpg',
+      description: 'When Lou Bloom, desperate for work, muscles into the world of L.A. crime journalism, he blurs the line between observer and participant to become the star of his own story. Aiding him in his effort is Nina, a TV-news veteran.',
+      vote_average: 7.7,
+      vote_count: 8018,
+      year: '2014'
     )
     thriller = nightcrawler.genres.create(
       name: 'Thriller',
