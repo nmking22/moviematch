@@ -23,7 +23,7 @@ class Api::V1::GroupsController < ApplicationController
 
   def matches
     matches = Movie.group_matches(params[:id])
-    render json: MovieSerializer.new(matches)
+    render json: MatchSerializer.new(matches)
   end
 
   private
