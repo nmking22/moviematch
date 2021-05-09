@@ -269,6 +269,28 @@ describe 'Groups API' do
     x_men = Group.create(
       name: 'X Men'
     )
+    netflix = Service.create(
+      name: 'Netflix',
+      watchmode_id: 1234,
+      logo: 'netflix.jpeg'
+    )
+    hulu = Service.create(
+      name: 'Hulu',
+      watchmode_id: 157,
+      logo: 'hulu_logo.png'
+    )
+    MovieAvailability.create(
+      movie: austin_powers,
+      service: netflix
+    )
+    MovieAvailability.create(
+      movie: austin_powers,
+      service: hulu
+    )
+    MovieAvailability.create(
+      movie: nightcrawler,
+      service: netflix
+    )
     UserGroup.create(
       user: nick,
       group: x_men
@@ -324,16 +346,17 @@ describe 'Groups API' do
 
     get "/api/v1/groups/#{x_men.id}/matches"
     json = JSON.parse(response.body, symbolize_names:true)
-
+# binding.pry
     expect(response).to be_successful
     expect(json).to be_a(Hash)
     expect(json).to have_key(:data)
     expect(json[:data]).to be_an(Array)
     expect(json[:data].length).to eq(2)
+    expect(json[:data][0]).to be_a(Hash)
     expect(json[:data][0]).to have_key(:id)
     expect(json[:data][0][:id]).to eq(austin_powers.id.to_s)
     expect(json[:data][0]).to have_key(:type)
-    expect(json[:data][0][:type]).to eq('movie')
+    expect(json[:data][0][:type]).to eq('match')
     expect(json[:data][0]).to have_key(:attributes)
     expect(json[:data][0][:attributes]).to be_a(Hash)
     expect(json[:data][0][:attributes]).to have_key(:title)
@@ -352,10 +375,41 @@ describe 'Groups API' do
     expect(json[:data][0][:attributes][:vote_average]).to eq(austin_powers.vote_average)
     expect(json[:data][0][:attributes]).to have_key(:year)
     expect(json[:data][0][:attributes][:year]).to eq(austin_powers.year)
+    expect(json[:data][0][:attributes]).to have_key(:services)
+    expect(json[:data][0][:attributes][:services]).to be_an(Array)
+    expect(json[:data][0][:attributes][:services].length).to eq(2)
+    expect(json[:data][0][:attributes][:services][0]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:id)
+    expect(json[:data][0][:attributes][:services][0][:id]).to eq(netflix.id)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:name)
+    expect(json[:data][0][:attributes][:services][0][:name]).to eq(netflix.name)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:watchmode_id)
+    expect(json[:data][0][:attributes][:services][0][:watchmode_id]).to eq(netflix.watchmode_id)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:services][0][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:services][0][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:logo)
+    expect(json[:data][0][:attributes][:services][0][:logo]).to eq(netflix.logo)
+    expect(json[:data][0][:attributes][:services][1]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:id)
+    expect(json[:data][0][:attributes][:services][1][:id]).to eq(hulu.id)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:name)
+    expect(json[:data][0][:attributes][:services][1][:name]).to eq(hulu.name)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:watchmode_id)
+    expect(json[:data][0][:attributes][:services][1][:watchmode_id]).to eq(hulu.watchmode_id)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:services][1][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:services][1][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:logo)
+    expect(json[:data][0][:attributes][:services][1][:logo]).to eq(hulu.logo)
+
+    expect(json[:data][1]).to be_a(Hash)
     expect(json[:data][1]).to have_key(:id)
     expect(json[:data][1][:id]).to eq(nightcrawler.id.to_s)
     expect(json[:data][1]).to have_key(:type)
-    expect(json[:data][1][:type]).to eq('movie')
+    expect(json[:data][1][:type]).to eq('match')
     expect(json[:data][1]).to have_key(:attributes)
     expect(json[:data][1][:attributes]).to be_a(Hash)
     expect(json[:data][1][:attributes]).to have_key(:title)
@@ -374,5 +428,20 @@ describe 'Groups API' do
     expect(json[:data][1][:attributes][:vote_average]).to eq(nightcrawler.vote_average)
     expect(json[:data][1][:attributes]).to have_key(:year)
     expect(json[:data][1][:attributes][:year]).to eq(nightcrawler.year)
+    expect(json[:data][1][:attributes][:services]).to be_an(Array)
+    expect(json[:data][1][:attributes][:services].length).to eq(1)
+    expect(json[:data][1][:attributes][:services][0]).to be_a(Hash)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:id)
+    expect(json[:data][1][:attributes][:services][0][:id]).to eq(netflix.id)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:name)
+    expect(json[:data][1][:attributes][:services][0][:name]).to eq(netflix.name)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:watchmode_id)
+    expect(json[:data][1][:attributes][:services][0][:watchmode_id]).to eq(netflix.watchmode_id)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:created_at)
+    expect(json[:data][1][:attributes][:services][0][:created_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:updated_at)
+    expect(json[:data][1][:attributes][:services][0][:updated_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:logo)
+    expect(json[:data][1][:attributes][:services][0][:logo]).to eq(netflix.logo)
   end
 end
