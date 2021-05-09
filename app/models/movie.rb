@@ -78,13 +78,14 @@ class Movie < ApplicationRecord
       end
     end
     valid_movies = (right_swiped - left_swiped).to_a
+    invalid_movies = []
     group.users.each do |user|
       valid_movies.each do |movie|
         unless user.movies.include?(movie)
-          valid_movies.delete(movie)
+          invalid_movies << movie
         end
       end
     end
-    valid_movies
+    valid_movies - invalid_movies
   end
 end
