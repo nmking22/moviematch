@@ -231,4 +231,268 @@ describe 'Groups API' do
     expect(json[:data][:attributes][:users][1]).to have_key(:updated_at)
     expect(json[:data][:attributes][:users][1][:updated_at]).to be_a(String)
   end
+
+  it 'can retreive all movie matches for a group' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nick@example.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    ron = User.create(
+      uid: '12345678910',
+      email: 'ron@example.com',
+      first_name: 'Ron',
+      last_name: 'Swanson',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    tom = User.create(
+      uid: '12345678910',
+      email: 'tom@example.com',
+      first_name: 'Tom',
+      last_name: 'Haverford',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    austin_powers = Movie.create(
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816,
+      poster_path: '/1PkGnyFwRyapmbuILIOXXxiSh7Y.jpg',
+      description: "As a swingin' fashion photographer by day and a groovy British superagent by night, Austin Powers is the '60s' most shagadelic spy, baby! But can he stop megalomaniac Dr. Evil after the bald villain freezes himself and unthaws in the '90s? With the help of sexy sidekick Vanessa Kensington, he just might.",
+      vote_average: 6.5,
+      vote_count: 2349,
+      year: '1997'
+    )
+    comedy = austin_powers.genres.create(
+      name: 'Comedy',
+      tmdb_id: 14
+    )
+    action = austin_powers.genres.create(
+      name: 'Action',
+      tmdb_id: 16
+    )
+    nightcrawler = Movie.create(
+      title: 'Nightcrawler',
+      tmdb_id: 242582,
+      poster_path: '/j9HrX8f7GbZQm1BrBiR40uFQZSb.jpg',
+      description: 'When Lou Bloom, desperate for work, muscles into the world of L.A. crime journalism, he blurs the line between observer and participant to become the star of his own story. Aiding him in his effort is Nina, a TV-news veteran.',
+      vote_average: 7.7,
+      vote_count: 8018,
+      year: '2014'
+    )
+    thriller = nightcrawler.genres.create(
+      name: 'Thriller',
+      tmdb_id: 11
+    )
+    theory_of_everything = Movie.create(
+      title: 'The Theory of Everything',
+      tmdb_id: 266856
+    )
+    x_men = Group.create(
+      name: 'X Men'
+    )
+    netflix = Service.create(
+      name: 'Netflix',
+      watchmode_id: 203,
+      logo: 'netflix_logo.png'
+    )
+    hulu = Service.create(
+      name: 'Hulu',
+      watchmode_id: 157,
+      logo: 'hulu_logo.jpeg'
+    )
+    MovieAvailability.create(
+      movie: austin_powers,
+      service: netflix
+    )
+    MovieAvailability.create(
+      movie: austin_powers,
+      service: hulu
+    )
+    MovieAvailability.create(
+      movie: nightcrawler,
+      service: netflix
+    )
+    UserGroup.create(
+      user: nick,
+      group: x_men
+    )
+    UserGroup.create(
+      user: ron,
+      group: x_men
+    )
+    UserGroup.create(
+      user: tom,
+      group: x_men
+    )
+    Swipe.create(
+      movie: austin_powers,
+      user: nick,
+      rating: 1
+    )
+    Swipe.create(
+      movie: austin_powers,
+      user: ron,
+      rating: 1
+    )
+    Swipe.create(
+      movie: austin_powers,
+      user: tom,
+      rating: 1
+    )
+    Swipe.create(
+      movie: nightcrawler,
+      user: nick,
+      rating: 1
+    )
+    Swipe.create(
+      movie: nightcrawler,
+      user: ron,
+      rating: 1
+    )
+    Swipe.create(
+      movie: nightcrawler,
+      user: tom,
+      rating: 1
+    )
+    Swipe.create(
+      movie: theory_of_everything,
+      user: nick,
+      rating: 1
+    )
+    Swipe.create(
+      movie: theory_of_everything,
+      user: ron,
+      rating: 0
+    )
+
+    get "/api/v1/groups/#{x_men.id}/matches"
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_an(Array)
+    expect(json[:data].length).to eq(2)
+    expect(json[:data][0]).to be_a(Hash)
+    expect(json[:data][0]).to have_key(:id)
+    expect(json[:data][0][:id]).to eq(austin_powers.id.to_s)
+    expect(json[:data][0]).to have_key(:type)
+    expect(json[:data][0][:type]).to eq('match')
+    expect(json[:data][0]).to have_key(:attributes)
+    expect(json[:data][0][:attributes]).to be_a(Hash)
+    expect(json[:data][0][:attributes]).to have_key(:title)
+    expect(json[:data][0][:attributes][:title]).to eq(austin_powers.title)
+    expect(json[:data][0][:attributes]).to have_key(:tmdb_id)
+    expect(json[:data][0][:attributes][:tmdb_id]).to eq(austin_powers.tmdb_id)
+    expect(json[:data][0][:attributes]).to have_key(:poster_path)
+    expect(json[:data][0][:attributes][:poster_path]).to eq(austin_powers.poster_path)
+    expect(json[:data][0][:attributes]).to have_key(:description)
+    expect(json[:data][0][:attributes][:description]).to eq(austin_powers.description)
+    expect(json[:data][0][:attributes]).to have_key(:genres)
+    expect(json[:data][0][:attributes][:genres]).to be_an(Array)
+    expect(json[:data][0][:attributes][:genres].length).to eq(2)
+    expect(json[:data][0][:attributes][:genres][0]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:id)
+    expect(json[:data][0][:attributes][:genres][0][:id]).to eq(comedy.id)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:genres][0][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:genres][0][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:tmdb_id)
+    expect(json[:data][0][:attributes][:genres][0][:tmdb_id]).to eq(comedy.tmdb_id)
+    expect(json[:data][0][:attributes][:genres][1]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:id)
+    expect(json[:data][0][:attributes][:genres][1][:id]).to eq(action.id)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:genres][1][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:genres][1][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:tmdb_id)
+    expect(json[:data][0][:attributes][:genres][1][:tmdb_id]).to eq(action.tmdb_id)
+    expect(json[:data][0][:attributes]).to have_key(:vote_count)
+    expect(json[:data][0][:attributes][:vote_count]).to eq(austin_powers.vote_count)
+    expect(json[:data][0][:attributes]).to have_key(:vote_average)
+    expect(json[:data][0][:attributes][:vote_average]).to eq(austin_powers.vote_average)
+    expect(json[:data][0][:attributes]).to have_key(:year)
+    expect(json[:data][0][:attributes][:year]).to eq(austin_powers.year)
+    expect(json[:data][0][:attributes]).to have_key(:services)
+    expect(json[:data][0][:attributes][:services]).to be_an(Array)
+    expect(json[:data][0][:attributes][:services].length).to eq(2)
+    expect(json[:data][0][:attributes][:services][0]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:id)
+    expect(json[:data][0][:attributes][:services][0][:id]).to eq(netflix.id)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:name)
+    expect(json[:data][0][:attributes][:services][0][:name]).to eq(netflix.name)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:watchmode_id)
+    expect(json[:data][0][:attributes][:services][0][:watchmode_id]).to eq(netflix.watchmode_id)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:services][0][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:services][0][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][0]).to have_key(:logo)
+    expect(json[:data][0][:attributes][:services][0][:logo]).to eq(netflix.logo)
+    expect(json[:data][0][:attributes][:services][1]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:id)
+    expect(json[:data][0][:attributes][:services][1][:id]).to eq(hulu.id)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:name)
+    expect(json[:data][0][:attributes][:services][1][:name]).to eq(hulu.name)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:watchmode_id)
+    expect(json[:data][0][:attributes][:services][1][:watchmode_id]).to eq(hulu.watchmode_id)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:services][1][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:services][1][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:services][1]).to have_key(:logo)
+    expect(json[:data][0][:attributes][:services][1][:logo]).to eq(hulu.logo)
+
+    expect(json[:data][1]).to be_a(Hash)
+    expect(json[:data][1]).to have_key(:id)
+    expect(json[:data][1][:id]).to eq(nightcrawler.id.to_s)
+    expect(json[:data][1]).to have_key(:type)
+    expect(json[:data][1][:type]).to eq('match')
+    expect(json[:data][1]).to have_key(:attributes)
+    expect(json[:data][1][:attributes]).to be_a(Hash)
+    expect(json[:data][1][:attributes]).to have_key(:title)
+    expect(json[:data][1][:attributes][:title]).to eq(nightcrawler.title)
+    expect(json[:data][1][:attributes]).to have_key(:tmdb_id)
+    expect(json[:data][1][:attributes][:tmdb_id]).to eq(nightcrawler.tmdb_id)
+    expect(json[:data][1][:attributes]).to have_key(:poster_path)
+    expect(json[:data][1][:attributes][:poster_path]).to eq(nightcrawler.poster_path)
+    expect(json[:data][1][:attributes]).to have_key(:description)
+    expect(json[:data][1][:attributes][:description]).to eq(nightcrawler.description)
+    expect(json[:data][1][:attributes]).to have_key(:genres)
+    expect(json[:data][1][:attributes][:genres]).to be_an(Array)
+    expect(json[:data][1][:attributes][:genres].length).to eq(1)
+    expect(json[:data][1][:attributes][:genres][0]).to be_a(Hash)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:id)
+    expect(json[:data][1][:attributes][:genres][0][:id]).to eq(thriller.id)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:created_at)
+    expect(json[:data][1][:attributes][:genres][0][:created_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:updated_at)
+    expect(json[:data][1][:attributes][:genres][0][:updated_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:tmdb_id)
+    expect(json[:data][1][:attributes][:genres][0][:tmdb_id]).to eq(thriller.tmdb_id)
+    expect(json[:data][1][:attributes]).to have_key(:vote_count)
+    expect(json[:data][1][:attributes][:vote_count]).to eq(nightcrawler.vote_count)
+    expect(json[:data][1][:attributes]).to have_key(:vote_average)
+    expect(json[:data][1][:attributes][:vote_average]).to eq(nightcrawler.vote_average)
+    expect(json[:data][1][:attributes]).to have_key(:year)
+    expect(json[:data][1][:attributes][:year]).to eq(nightcrawler.year)
+    expect(json[:data][1][:attributes][:services]).to be_an(Array)
+    expect(json[:data][1][:attributes][:services].length).to eq(1)
+    expect(json[:data][1][:attributes][:services][0]).to be_a(Hash)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:id)
+    expect(json[:data][1][:attributes][:services][0][:id]).to eq(netflix.id)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:name)
+    expect(json[:data][1][:attributes][:services][0][:name]).to eq(netflix.name)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:watchmode_id)
+    expect(json[:data][1][:attributes][:services][0][:watchmode_id]).to eq(netflix.watchmode_id)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:created_at)
+    expect(json[:data][1][:attributes][:services][0][:created_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:updated_at)
+    expect(json[:data][1][:attributes][:services][0][:updated_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:services][0]).to have_key(:logo)
+    expect(json[:data][1][:attributes][:services][0][:logo]).to eq(netflix.logo)
+  end
 end

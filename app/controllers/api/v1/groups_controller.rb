@@ -21,6 +21,11 @@ class Api::V1::GroupsController < ApplicationController
     Group.destroy(params[:id])
   end
 
+  def matches
+    matches = Movie.group_matches(params[:id])
+    render json: MatchSerializer.new(matches)
+  end
+
   private
 
   def group_params

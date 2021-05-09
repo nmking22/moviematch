@@ -62,4 +62,30 @@ class Movie < ApplicationRecord
       nil
     end
   end
+
+  def self.group_matches(group_id)
+    # REFACTOR - change to activerecord
+    group = Group.find(group_id)
+    right_swiped = Set.new
+    left_swiped = Set.new
+    group.users.each do |user|
+      user.swipes.each do |swipe|
+        if swipe.rating == 1
+          right_swiped << swipe.movie
+        elsif swipe.rating == 0
+          left_swiped << swipe.movie
+        end
+      end
+    end
+    valid_movies = (right_swiped - left_swiped).to_a
+    invalid_movies = []
+    group.users.each do |user|
+      valid_movies.each do |movie|
+        unless user.movies.include?(movie)
+          invalid_movies << movie
+        end
+      end
+    end
+    valid_movies - invalid_movies
+  end
 end

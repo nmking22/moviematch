@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       end
 
       # groups routes
+      get '/groups/:id/matches', to: 'groups#matches'
       resources :groups, only: [:create, :destroy, :show]
 
       # user_groups routes

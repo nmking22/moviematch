@@ -95,5 +95,150 @@ describe Movie, type: :model do
         expect(valid_movies).to include(movie)
       end
     end
+
+    it '.group_right_swiped' do
+      austin_powers = Movie.create(
+        title: 'Austin Powers: International Man of Mystery',
+        tmdb_id: 816
+      )
+      nightcrawler = Movie.create(
+        title: 'Nightcrawler',
+        tmdb_id: 242582
+      )
+      theory_of_everything = Movie.create(
+        title: 'The Theory of Everything',
+        tmdb_id: 266856
+      )
+
+      nick = User.create(
+        uid: '12345678910',
+        email: 'nick@example.com',
+        first_name: 'Nick',
+        last_name: 'King',
+        image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+      )
+      ron = User.create(
+        uid: '12345678910',
+        email: 'ron@example.com',
+        first_name: 'Ron',
+        last_name: 'Swanson',
+        image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+      )
+      tom = User.create(
+        uid: '12345678910',
+        email: 'tom@example.com',
+        first_name: 'Tom',
+        last_name: 'Haverford',
+        image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+      )
+      leslie = User.create(
+        uid: '12345678910',
+        email: 'leslie@example.com',
+        first_name: 'Leslie',
+        last_name: 'Knope',
+        image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+      )
+
+      fantastic_four = Group.create(
+        name: 'Fantastic Four'
+      )
+      avengers = Group.create(
+        name: 'The Avengers'
+      )
+      x_men = Group.create(
+        name: 'X Men'
+      )
+      UserGroup.create(
+        user: nick,
+        group: fantastic_four
+      )
+      UserGroup.create(
+        user: ron,
+        group: fantastic_four
+      )
+      UserGroup.create(
+        user: tom,
+        group: fantastic_four
+      )
+      UserGroup.create(
+        user: leslie,
+        group: fantastic_four
+      )
+      UserGroup.create(
+        user: nick,
+        group: x_men
+      )
+      UserGroup.create(
+        user: ron,
+        group: x_men
+      )
+      UserGroup.create(
+        user: tom,
+        group: x_men
+      )
+      UserGroup.create(
+        user: ron,
+        group: avengers
+      )
+      UserGroup.create(
+        user: leslie,
+        group: avengers
+      )
+
+      Swipe.create(
+        movie: austin_powers,
+        user: nick,
+        rating: 1
+      )
+      Swipe.create(
+        movie: austin_powers,
+        user: ron,
+        rating: 1
+      )
+      Swipe.create(
+        movie: austin_powers,
+        user: tom,
+        rating: 1
+      )
+      Swipe.create(
+        movie: austin_powers,
+        user: leslie,
+        rating: 1
+      )
+      Swipe.create(
+        movie: nightcrawler,
+        user: nick,
+        rating: 1
+      )
+      Swipe.create(
+        movie: nightcrawler,
+        user: ron,
+        rating: 1
+      )
+      Swipe.create(
+        movie: nightcrawler,
+        user: tom,
+        rating: 1
+      )
+      Swipe.create(
+        movie: nightcrawler,
+        user: leslie,
+        rating: 0
+      )
+      Swipe.create(
+        movie: theory_of_everything,
+        user: leslie,
+        rating: 1
+      )
+      Swipe.create(
+        movie: theory_of_everything,
+        user: ron,
+        rating: 1
+      )
+
+      expect(Movie.group_matches(fantastic_four.id)).to eq([austin_powers])
+      expect(Movie.group_matches(x_men.id)).to eq([austin_powers, nightcrawler])
+      expect(Movie.group_matches(avengers.id)).to eq([austin_powers, theory_of_everything])
+    end
   end
 end
