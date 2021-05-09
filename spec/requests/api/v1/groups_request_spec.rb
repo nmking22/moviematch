@@ -256,11 +256,28 @@ describe 'Groups API' do
     )
     austin_powers = Movie.create(
       title: 'Austin Powers: International Man of Mystery',
-      tmdb_id: 816
+      tmdb_id: 816,
+      poster_path: '/1PkGnyFwRyapmbuILIOXXxiSh7Y.jpg',
+      description: "As a swingin' fashion photographer by day and a groovy British superagent by night, Austin Powers is the '60s' most shagadelic spy, baby! But can he stop megalomaniac Dr. Evil after the bald villain freezes himself and unthaws in the '90s? With the help of sexy sidekick Vanessa Kensington, he just might.",
+      vote_average: 6.5,
+      vote_count: 2349,
+      year: '1997'
+    )
+    comedy = austin_powers.genres.create(
+      name: 'Comedy',
+      tmdb_id: 14
+    )
+    action = austin_powers.genres.create(
+      name: 'Action',
+      tmdb_id: 16
     )
     nightcrawler = Movie.create(
       title: 'Nightcrawler',
       tmdb_id: 242582
+    )
+    thriller = nightcrawler.genres.create(
+      name: 'Thriller',
+      tmdb_id: 11
     )
     theory_of_everything = Movie.create(
       title: 'The Theory of Everything',
@@ -346,7 +363,7 @@ describe 'Groups API' do
 
     get "/api/v1/groups/#{x_men.id}/matches"
     json = JSON.parse(response.body, symbolize_names:true)
-# binding.pry
+
     expect(response).to be_successful
     expect(json).to be_a(Hash)
     expect(json).to have_key(:data)
@@ -368,7 +385,26 @@ describe 'Groups API' do
     expect(json[:data][0][:attributes]).to have_key(:description)
     expect(json[:data][0][:attributes][:description]).to eq(austin_powers.description)
     expect(json[:data][0][:attributes]).to have_key(:genres)
-    expect(json[:data][0][:attributes][:genres]).to eq(austin_powers.genres)
+    expect(json[:data][0][:attributes][:genres]).to be_an(Array)
+    expect(json[:data][0][:attributes][:genres].length).to eq(2)
+    expect(json[:data][0][:attributes][:genres][0]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:id)
+    expect(json[:data][0][:attributes][:genres][0][:id]).to eq(comedy.id)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:genres][0][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:genres][0][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][0]).to have_key(:tmdb_id)
+    expect(json[:data][0][:attributes][:genres][0][:tmdb_id]).to eq(comedy.tmdb_id)
+    expect(json[:data][0][:attributes][:genres][1]).to be_a(Hash)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:id)
+    expect(json[:data][0][:attributes][:genres][1][:id]).to eq(action.id)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:created_at)
+    expect(json[:data][0][:attributes][:genres][1][:created_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:updated_at)
+    expect(json[:data][0][:attributes][:genres][1][:updated_at]).to be_a(String)
+    expect(json[:data][0][:attributes][:genres][1]).to have_key(:tmdb_id)
+    expect(json[:data][0][:attributes][:genres][1][:tmdb_id]).to eq(action.tmdb_id)
     expect(json[:data][0][:attributes]).to have_key(:vote_count)
     expect(json[:data][0][:attributes][:vote_count]).to eq(austin_powers.vote_count)
     expect(json[:data][0][:attributes]).to have_key(:vote_average)
@@ -421,7 +457,17 @@ describe 'Groups API' do
     expect(json[:data][1][:attributes]).to have_key(:description)
     expect(json[:data][1][:attributes][:description]).to eq(nightcrawler.description)
     expect(json[:data][1][:attributes]).to have_key(:genres)
-    expect(json[:data][1][:attributes][:genres]).to eq(nightcrawler.genres)
+    expect(json[:data][1][:attributes][:genres]).to be_an(Array)
+    expect(json[:data][1][:attributes][:genres].length).to eq(1)
+    expect(json[:data][1][:attributes][:genres][0]).to be_a(Hash)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:id)
+    expect(json[:data][1][:attributes][:genres][0][:id]).to eq(thriller.id)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:created_at)
+    expect(json[:data][1][:attributes][:genres][0][:created_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:updated_at)
+    expect(json[:data][1][:attributes][:genres][0][:updated_at]).to be_a(String)
+    expect(json[:data][1][:attributes][:genres][0]).to have_key(:tmdb_id)
+    expect(json[:data][1][:attributes][:genres][0][:tmdb_id]).to eq(thriller.tmdb_id)
     expect(json[:data][1][:attributes]).to have_key(:vote_count)
     expect(json[:data][1][:attributes][:vote_count]).to eq(nightcrawler.vote_count)
     expect(json[:data][1][:attributes]).to have_key(:vote_average)
