@@ -293,13 +293,13 @@ describe 'Groups API' do
     )
     netflix = Service.create(
       name: 'Netflix',
-      watchmode_id: 1234,
-      logo: 'netflix.jpeg'
+      watchmode_id: 203,
+      logo: 'netflix_logo.png'
     )
     hulu = Service.create(
       name: 'Hulu',
       watchmode_id: 157,
-      logo: 'hulu_logo.png'
+      logo: 'hulu_logo.jpeg'
     )
     MovieAvailability.create(
       movie: austin_powers,
