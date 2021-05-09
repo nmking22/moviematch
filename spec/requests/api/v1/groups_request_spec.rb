@@ -231,4 +231,148 @@ describe 'Groups API' do
     expect(json[:data][:attributes][:users][1]).to have_key(:updated_at)
     expect(json[:data][:attributes][:users][1][:updated_at]).to be_a(String)
   end
+
+  it 'can retreive all movie matches for a group' do
+    nick = User.create(
+      uid: '12345678910',
+      email: 'nick@example.com',
+      first_name: 'Nick',
+      last_name: 'King',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    ron = User.create(
+      uid: '12345678910',
+      email: 'ron@example.com',
+      first_name: 'Ron',
+      last_name: 'Swanson',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    tom = User.create(
+      uid: '12345678910',
+      email: 'tom@example.com',
+      first_name: 'Tom',
+      last_name: 'Haverford',
+      image: 'https://lh6.googleusercontent.com/-hEH5aK9fmMI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucntLnugtaOVsqmvJGm89fFbDJ6GaQ/s96-c/photo.jpg'
+    )
+    austin_powers = Movie.create(
+      title: 'Austin Powers: International Man of Mystery',
+      tmdb_id: 816
+    )
+    nightcrawler = Movie.create(
+      title: 'Nightcrawler',
+      tmdb_id: 242582
+    )
+    theory_of_everything = Movie.create(
+      title: 'The Theory of Everything',
+      tmdb_id: 266856
+    )
+    x_men = Group.create(
+      name: 'X Men'
+    )
+    UserGroup.create(
+      user: nick,
+      group: x_men
+    )
+    UserGroup.create(
+      user: ron,
+      group: x_men
+    )
+    UserGroup.create(
+      user: tom,
+      group: x_men
+    )
+    Swipe.create(
+      movie: austin_powers,
+      user: nick,
+      rating: 1
+    )
+    Swipe.create(
+      movie: austin_powers,
+      user: ron,
+      rating: 1
+    )
+    Swipe.create(
+      movie: austin_powers,
+      user: tom,
+      rating: 1
+    )
+    Swipe.create(
+      movie: nightcrawler,
+      user: nick,
+      rating: 1
+    )
+    Swipe.create(
+      movie: nightcrawler,
+      user: ron,
+      rating: 1
+    )
+    Swipe.create(
+      movie: nightcrawler,
+      user: tom,
+      rating: 1
+    )
+    Swipe.create(
+      movie: theory_of_everything,
+      user: nick,
+      rating: 1
+    )
+    Swipe.create(
+      movie: theory_of_everything,
+      user: ron,
+      rating: 0
+    )
+
+    get "/api/v1/groups/#{x_men.id}/matches"
+    json = JSON.parse(response.body, symbolize_names:true)
+
+    expect(response).to be_successful
+    expect(json).to be_a(Hash)
+    expect(json).to have_key(:data)
+    expect(json[:data]).to be_an(Array)
+    expect(json[:data].length).to eq(2)
+    expect(json[:data][0]).to have_key(:id)
+    expect(json[:data][0][:id]).to eq(austin_powers.id.to_s)
+    expect(json[:data][0]).to have_key(:type)
+    expect(json[:data][0][:type]).to eq('movie')
+    expect(json[:data][0]).to have_key(:attributes)
+    expect(json[:data][0][:attributes]).to be_a(Hash)
+    expect(json[:data][0][:attributes]).to have_key(:title)
+    expect(json[:data][0][:attributes][:title]).to eq(austin_powers.title)
+    expect(json[:data][0][:attributes]).to have_key(:tmdb_id)
+    expect(json[:data][0][:attributes][:tmdb_id]).to eq(austin_powers.tmdb_id)
+    expect(json[:data][0][:attributes]).to have_key(:poster_path)
+    expect(json[:data][0][:attributes][:poster_path]).to eq(austin_powers.poster_path)
+    expect(json[:data][0][:attributes]).to have_key(:description)
+    expect(json[:data][0][:attributes][:description]).to eq(austin_powers.description)
+    expect(json[:data][0][:attributes]).to have_key(:genres)
+    expect(json[:data][0][:attributes][:genres]).to eq(austin_powers.genres)
+    expect(json[:data][0][:attributes]).to have_key(:vote_count)
+    expect(json[:data][0][:attributes][:vote_count]).to eq(austin_powers.vote_count)
+    expect(json[:data][0][:attributes]).to have_key(:vote_average)
+    expect(json[:data][0][:attributes][:vote_average]).to eq(austin_powers.vote_average)
+    expect(json[:data][0][:attributes]).to have_key(:year)
+    expect(json[:data][0][:attributes][:year]).to eq(austin_powers.year)
+    expect(json[:data][1]).to have_key(:id)
+    expect(json[:data][1][:id]).to eq(nightcrawler.id.to_s)
+    expect(json[:data][1]).to have_key(:type)
+    expect(json[:data][1][:type]).to eq('movie')
+    expect(json[:data][1]).to have_key(:attributes)
+    expect(json[:data][1][:attributes]).to be_a(Hash)
+    expect(json[:data][1][:attributes]).to have_key(:title)
+    expect(json[:data][1][:attributes][:title]).to eq(nightcrawler.title)
+    expect(json[:data][1][:attributes]).to have_key(:tmdb_id)
+    expect(json[:data][1][:attributes][:tmdb_id]).to eq(nightcrawler.tmdb_id)
+    expect(json[:data][1][:attributes]).to have_key(:poster_path)
+    expect(json[:data][1][:attributes][:poster_path]).to eq(nightcrawler.poster_path)
+    expect(json[:data][1][:attributes]).to have_key(:description)
+    expect(json[:data][1][:attributes][:description]).to eq(nightcrawler.description)
+    expect(json[:data][1][:attributes]).to have_key(:genres)
+    expect(json[:data][1][:attributes][:genres]).to eq(nightcrawler.genres)
+    expect(json[:data][1][:attributes]).to have_key(:vote_count)
+    expect(json[:data][1][:attributes][:vote_count]).to eq(nightcrawler.vote_count)
+    expect(json[:data][1][:attributes]).to have_key(:vote_average)
+    expect(json[:data][1][:attributes][:vote_average]).to eq(nightcrawler.vote_average)
+    expect(json[:data][1][:attributes]).to have_key(:year)
+    expect(json[:data][1][:attributes][:year]).to eq(nightcrawler.year)
+  end
 end
