@@ -72,7 +72,7 @@ For usage on your local machine follow the instructions listed below:
 
 ## Schema
 
-<img width="1409" alt="Screen Shot 2021-04-26 at 10 40 50 PM" src="https://user-images.githubusercontent.com/68172332/116186271-86d62b80-a6e0-11eb-8122-e00c94c55653.png">
+<img width="1177" alt="Screen Shot 2021-05-10 at 5 03 40 PM" src="https://user-images.githubusercontent.com/68172332/117734951-c35e5880-b1b1-11eb-99c9-2f47477bcfb0.png">
 
 ## API Documentation
 
