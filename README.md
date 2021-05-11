@@ -50,11 +50,13 @@ For usage on your local machine follow the instructions listed below:
 
 * This app uses Rails version `6.1.3.1`
 
-* The [Figaro Gem](https://github.com/laserlemon/figaro) is used to keep confidential information like API keys secure.
+* The [Figaro](https://github.com/laserlemon/figaro) gem is used to keep confidential information like API keys secure.
 
 * The [Fast JSON API](https://github.com/Netflix/fast_jsonapi) gem is used to serialize data.
 
-* The [SimpleCov](https://github.com/simplecov-ruby/simplecov) gem is used to ensure that 100% of our code is covered with unit testing.  
+* The [SimpleCov](https://github.com/simplecov-ruby/simplecov) gem is used to ensure that 100% of our code is covered with unit testing.
+
+* The [Webmock](https://github.com/bblimke/webmock) and [VCR](https://github.com/vcr/vcr) gems are used for mocking and stubbing BE API calls.
 
 
 ## Learning Goals
