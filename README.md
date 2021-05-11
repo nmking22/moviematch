@@ -56,7 +56,7 @@ For usage on your local machine follow the instructions listed below:
 
 * The [SimpleCov](https://github.com/simplecov-ruby/simplecov) gem is used to ensure that 100% of our code is covered with unit testing.
 
-* The [Webmock](https://github.com/bblimke/webmock) and [VCR](https://github.com/vcr/vcr) gems are used for mocking and stubbing BE API calls.
+* The [Webmock](https://github.com/bblimke/webmock) and [VCR](https://github.com/vcr/vcr) gems are used for mocking and stubbing external API calls.
 
 
 ## Learning Goals
