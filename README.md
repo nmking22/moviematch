@@ -52,7 +52,7 @@ For usage on your local machine follow the instructions listed below:
 
 * The [Figaro Gem](https://github.com/laserlemon/figaro) is used to keep confidential information like API keys secure.
 
-* The [Fast JSON API Gem](https://github.com/Netflix/fast_jsonapi) is used to serialize data.
+* The [Fast JSON API](https://github.com/Netflix/fast_jsonapi) gem is used to serialize data.
 
 * The [SimpleCov](https://github.com/simplecov-ruby/simplecov) gem is used to ensure that 100% of our code is covered with unit testing.  
 
