@@ -24,8 +24,8 @@ class MovieInfo
   end
 
   def add_description(movie_data)
-    if movie_data[:description]
-      movie_data[:description]
+    if movie_data[:overview]
+      movie_data[:overview]
     else
       'No description available'
     end
